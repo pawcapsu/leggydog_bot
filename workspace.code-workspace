@@ -1,0 +1,17 @@
+{
+	"folders": [
+    {
+      "path": "backend"
+    },
+    {
+      "path": "bots/telegram"
+    },
+    {
+      "path": "../pawcapsu/backend/notifier/src"
+    },
+    {
+      "path": "."
+    }
+  ],
+  "settings": {}
+}
