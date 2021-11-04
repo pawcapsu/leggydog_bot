@@ -20,7 +20,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         name: 'DATA_REQUESTS',
         transport: Transport.RMQ,
         options: {
-          urls: [process.env.RABBITMQ_URL],
+          // process.env.RABBITMQ_URL
+          urls: [`amqp://dog:12344321@srv-captain--leggydog-message-broker`],
           queue: 'DATA_REQUESTS',
           queueOptions: {
             durable: true,
