@@ -1,9 +1,9 @@
-name: api.pawcapsu.ml production
+name: backend production
 
 on: push
 
 jobs:
-  api_pawcapsu:
+  deploy:
     runs-on: ubuntu-latest
     env:
       PATH_LOCAL: "backend"
@@ -21,7 +21,7 @@ jobs:
     - name: Use npm@${{ matrix.npm-version }}
       run: npm install -g npm@${{ matrix.npm-version }}
     - name: Install dependencies
-      run: npm ci
+      run: npm install
     - name: Bootstrap and Build application
       run: npm run build:backend
     - name: Prepare artifact before cloud push
