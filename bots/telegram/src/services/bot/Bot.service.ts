@@ -26,7 +26,7 @@ export class BotService {
     private readonly gateway: GatewayService,
   ) {
     // Starting Telegram Bot
-    this.bot = new Bot('2075231096:AAFOXlhk5sgh0waUNsmtnDIxVAjRYX_uUr8');
+    this.bot = new Bot(process.env.TELEGRAM_KEY);
 
     //
     // Initializing callbacks
