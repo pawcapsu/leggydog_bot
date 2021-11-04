@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Bootstrap and Build application
-      run: npm run build:backend
+      run: npm run build:telegram
     - name: Prepare artifact before cloud push
       run: |
         cp $PATH_LOCAL/package.json $PATH_LOCAL/dist
