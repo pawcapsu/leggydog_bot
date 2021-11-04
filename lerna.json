@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "backend/*",
+    "bots/**/*"
+  ],
+  "version": "0.0.0"
+}
