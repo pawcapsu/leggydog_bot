@@ -41,3 +41,4 @@ jobs:
       run: |
         cd backend
         caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} --tarFile=output.tar -a leggydog-backend-service
+        
