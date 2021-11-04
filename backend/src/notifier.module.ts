@@ -21,7 +21,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         transport: Transport.RMQ,
         options: {
           // process.env.RABBITMQ_URL
-          urls: [`amqp://dog:12344321@srv-captain--leggydog-message-broker`],
+          urls: [`amqps://uircczlp:n1s7mJN3jF4ANtIgYTkfXjju8XtnmnNt@rat.rmq2.cloudamqp.com/uircczlp`],
           queue: 'DATA_REQUESTS',
           queueOptions: {
             durable: true,
