@@ -18,13 +18,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ClientsModule.register([
       {
         name: 'DATA_REQUESTS',
-        transport: Transport.RMQ,
+        transport: Transport.REDIS,
         options: {
-          urls: [process.env.RABBITMQ_URL],
-          queue: 'DATA_REQUESTS',
-          queueOptions: {
-            durable: true,
-          },
+          host: process.env.REDIS_HOST,
+          port: Number(process.env.REDIS_PORT),
+          password: process.env.REDIS_PASSWORD,
         },
       },
     ]),
@@ -52,6 +50,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         host: process.env.REDIS_HOST,
         port: Number(process.env.REDIS_PORT),
         password: process.env.REDIS_PASSWORD,
+      },
+      limiter: {
+        max: 1,
+        duration: 1500,
+        bounceBack: true,
       },
       defaultJobOptions: {
         removeOnComplete: true,

@@ -9,13 +9,11 @@ async function bootstrap() {
 
   // Connecting RabbitMQ microservice
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
+    transport: Transport.REDIS,
     options: {
-      urls: [process.env.RABBITMQ_URL],
-      queue: 'DATA_REQUESTS',
-      queueOptions: {
-        durable: true,
-      },
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT),
+      password: process.env.REDIS_PASSWORD,
     },
   });
 
