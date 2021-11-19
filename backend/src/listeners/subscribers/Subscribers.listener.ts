@@ -19,7 +19,7 @@ export class SubscribersListener {
 
     const subscriberData = await this.subscribersService.fetch(data.chat_id);
     console.log(subscriberData);
-    return { data: subscriberData };
+    return subscriberData;
   };
 
   // subscribers::add
