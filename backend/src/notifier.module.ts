@@ -26,7 +26,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
-
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL, {
