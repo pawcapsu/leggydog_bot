@@ -14,7 +14,12 @@ export class SubscribersListener {
   public async fetchSubscribers(
     @Payload() data: { consumer: EConsumerType, chat_id: number }
   ) {
-    return { data: await this.subscribersService.fetch(data.chat_id) };
+    console.log("trying to return data for payload:");
+    console.log(data);
+
+    const subscriberData = await this.subscribersService.fetch(data.chat_id);
+    console.log(subscriberData);
+    return { data: subscriberData };
   };
 
   // subscribers::add
