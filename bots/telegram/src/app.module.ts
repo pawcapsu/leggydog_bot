@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
 
 import * as Services from './services';
 import * as Listeners from './listeners';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ClientsModule.register([
       {
         name: 'DATA_REQUESTS',
-        transport: Transport.RMQ,
+        transport: Transport.REDIS,
         options: {
-          urls: [process.env.RABBITMQ_URL],
-          queue: 'DATA_REQUESTS',
-          queueOptions: {
-            durable: true,
-          },
+          host: process.env.REDIS_HOST,
+          port: Number(process.env.REDIS_PORT),
+          password: process.env.REDIS_PASSWORD,
         },
       },
     ]),
