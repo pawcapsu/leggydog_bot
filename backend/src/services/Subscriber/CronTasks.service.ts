@@ -26,20 +26,6 @@ export class CronTasksService {
 
   private readonly logger = new Logger(CronTasksService.name);
 
-  // @Cron(CronExpression.EVERY_5_SECONDS)
-  // async testCron() {
-  //   console.log('TEST CRON EVERY SECOND');
-  //   type TestType = {
-  //     test: string;
-  //   };
-
-  //   const value = await firstValueFrom(
-  //     this.testQueue.send<TestType>({ cmd: 'sum' }, 'data'),
-  //   );
-  //   console.log('VALUE:');
-  //   console.log(value);
-  // }
-
   @Cron(CronExpression.EVERY_MINUTE)
   async handleCron() {
     for await (const doc of this.agentsService.getCursor()) {
