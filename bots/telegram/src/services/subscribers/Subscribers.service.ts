@@ -11,9 +11,13 @@ export class SubscribersService {
 
   // public fetch
   public async fetch(chat_id: number) {
-    return await firstValueFrom(
+    console.log("Got response from Backend service:");
+    const response = await firstValueFrom(
       this.dataRequests.send('subscribers::fetch', { consumer: 'TELEGRAM', chat_id })
     );
+    console.log(response);
+
+    return response;
   };
 
   // public add
