@@ -7,13 +7,13 @@ async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(NotifierModule);
 
-  // Connecting RabbitMQ microservice
+  // Connecting broker microservice
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {
       host: process.env.REDIS_HOST,
       port: Number(process.env.REDIS_PORT),
-      password: process.env.REDIS_PASSWORD,
+      password: process.env.REDIS_PASSWORD
     },
   });
 
