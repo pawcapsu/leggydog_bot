@@ -4,20 +4,20 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { NotifierModule } from './notifier.module';
 
 async function bootstrap() {
-  const logger = new Logger();
   const app = await NestFactory.create(NotifierModule);
 
   // Connecting broker microservice
-  app.connectMicroservice<MicroserviceOptions>({
+  await app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {
       host: process.env.REDIS_HOST,
       port: Number(process.env.REDIS_PORT),
-      password: process.env.REDIS_PASSWORD
+      password: process.env.REDIS_PASSWORD,
+      prefix: 'broker_',
     },
   });
 
-  await app.startAllMicroservices()
+  await app.startAllMicroservices();
   await app.listen(process.env.PORT || 3001);
 }
 

@@ -16,8 +16,10 @@ import * as Services from 'src/modules/Subscribers/services';
       ],
     ),
   ],
+  controllers: [
+    ...Object.values(Listeners),
+  ],
   providers: [
-    ...Object.values(Listeners), 
     ...Object.values(Services),
   ]
 })

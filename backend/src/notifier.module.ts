@@ -6,21 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import * as Modules from './modules';
 
-import { ClientsModule, Transport } from '@nestjs/microservices';
-
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'DATA_REQUESTS',
-        transport: Transport.REDIS,
-        options: {
-          host: process.env.REDIS_HOST,
-          port: Number(process.env.REDIS_PORT),
-          password: process.env.REDIS_PASSWORD
-        },
-      },
-    ]),
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL),

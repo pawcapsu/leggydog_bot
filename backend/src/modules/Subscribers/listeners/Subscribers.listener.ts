@@ -15,8 +15,6 @@ export class SubscribersListener {
   public async fetchSubscribers(
     @Payload() data: { type: ESubscriptionConsumerType, identifier: string }
   ) {
-    console.log('fetch subscribers');
-    console.log(data);
     return await this.subscribersService.fetch(data.identifier);
   };
 
