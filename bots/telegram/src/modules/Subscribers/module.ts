@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import ClientProxyImport from 'src/global/ClientProxy.import';
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
 
 import * as Services from './services';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ClientsModule.register([
       {
         name: 'DATA_REQUESTS',
@@ -13,7 +14,8 @@ import * as Services from './services';
         options: {
           host: process.env.REDIS_HOST,
           port: Number(process.env.REDIS_PORT),
-          password: process.env.REDIS_PASSWORD
+          password: process.env.REDIS_PASSWORD,
+          prefix: 'broker_',
         },
       },
     ])

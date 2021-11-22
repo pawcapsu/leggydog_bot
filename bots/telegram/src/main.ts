@@ -8,9 +8,9 @@ async function bootstrap() {
     {
       transport: Transport.REDIS,
       options: {
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT),
-        password: process.env.REDIS_PASSWORD
+        host: 'redis-15852.c294.ap-northeast-1-2.ec2.cloud.redislabs.com',
+        port: 15852,
+        password: 'BWbSdXtHe16D0H9heq7wtPeApcogzw4Z'
       },
     },
   );

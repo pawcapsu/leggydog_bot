@@ -1,5 +1,4 @@
 import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
 import { BotInstanceService } from "src/modules/BotInstance/services";
 
 @Injectable()

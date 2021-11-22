@@ -8,14 +8,11 @@ import { ErrorType } from 'src/types/enums/Errors';
 export class SubscriberService {
   constructor(
     @Inject('DATA_REQUESTS')
-    private readonly client: ClientProxy,
+    private client: ClientProxy,
   ) {}
 
   // public fetchMany
   public async fetchMany(chat_id: string | number) {
-    console.log('Trying to fetch subscribers');
-    this.client.send('subscribers::fetch', { type: 'TELEGRAM', identifier: String(chat_id) })
-    
     return await firstValueFrom(
       this.client
         .send('subscribers::fetch', { type: 'TELEGRAM', identifier: String(chat_id) })

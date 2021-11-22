@@ -1,12 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-
-import * as Modules from 'src/modules';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     ClientsModule.register([
       {
         name: 'DATA_REQUESTS',
@@ -18,10 +14,7 @@ import * as Modules from 'src/modules';
           prefix: 'broker_',
         },
       },
-    ]),
-
-    // Importing modules
-    ...Object.values(Modules),
-  ],
+    ])
+  ]
 })
-export class AppModule {}
+export class ClientModule {};
