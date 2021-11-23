@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { run } from '@grammyjs/runner';
 import { Bot } from "grammy";
-import { ERegisterScriptType, IBotCommand, TRegisterScriptInstanceType } from "src/types";
+import { ERegisterScriptType, IBotCallback, IBotCommand, TRegisterScriptInstanceType } from "src/types";
 
 @Injectable()
 export class BotInstanceService {
@@ -15,6 +15,7 @@ export class BotInstanceService {
   private commands: Array<IBotCommand> = [];
 
   // Registered callbacks
+  private callbacks: Array<IBotCallback> = [];
 
   // Registered customs
 
@@ -23,12 +24,27 @@ export class BotInstanceService {
     // Creating new bot instance
     this.bot = new Bot(process.env.TELEGRAM_KEY);
 
-    // Adding command and callbacks listeners
+    // Adding command listener
     this.bot.on('message', (ctx) => {
       if (ctx.update?.message?.text) {
         // Finding command with this pattern
         const command = ctx.update?.message?.text.replace('/', '');
         const instance = this.commands.find((x) => x.pattern.test(command));
+
+        // Checking if instance of this command even exists
+        if (!instance) return;
+
+        // Running this command
+        instance.run(ctx);
+      };
+    });
+
+    // Callback listener
+    this.bot.on("callback_query:data", (ctx) => {
+      if (ctx.update.callback_query?.data) {
+        // Finding command with this pattern
+        const callback = ctx.update.callback_query?.data;
+        const instance = this.callbacks.find((x) => x.pattern.test(callback));
 
         // Checking if instance of this command even exists
         if (!instance) return;
@@ -49,8 +65,11 @@ export class BotInstanceService {
   public register(type: ERegisterScriptType, instance: TRegisterScriptInstanceType) {
     // command register
     if (type == ERegisterScriptType.COMMAND) {
-      this.logger.log(`Registered command with pattern ${instance.pattern}`);
+      this.logger.warn(`Registered command with pattern ${instance.pattern}`);
       this.commands.push(instance);
+    } else if (type == ERegisterScriptType.CALLBACK) {
+      this.logger.warn(`Registered callback with pattern ${instance.pattern}`);
+      this.callbacks.push(instance);
     };
   };
 };

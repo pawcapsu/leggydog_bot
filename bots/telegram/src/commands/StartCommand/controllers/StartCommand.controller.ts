@@ -2,7 +2,7 @@ import { Injectable, OnApplicationBootstrap} from "@nestjs/common";
 import { ModuleRef } from '@nestjs/core';
 import { Context } from "grammy";
 import { BotInstanceService } from "src/modules/BotInstance/services";
-import { MenuCommandService } from "src/modules/MenuCommand/services";
+import { MenuCommandService } from "src/commands/MenuCommand/services";
 import { ERegisterScriptType, IBotCommand } from "src/types";
 
 // Exporting StartCommand

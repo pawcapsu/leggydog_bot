@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 import * as Modules from 'src/modules';
+import * as Commands from 'src/commands';
 
 @Module({
   imports: [
@@ -22,6 +23,9 @@ import * as Modules from 'src/modules';
 
     // Importing modules
     ...Object.values(Modules),
+
+    // Importing commands
+    ...Object.values(Commands),
   ],
 })
 export class AppModule {}
