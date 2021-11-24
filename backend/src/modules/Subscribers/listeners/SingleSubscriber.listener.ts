@@ -1,8 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { BasicSubscriptionInput, CreateSubscriptionInput, Error, ESubscriptionConsumerType, ESubscriptionSourceType, SubscriptionDocument } from 'src/types';
+import { BasicSubscriptionInput, CreateSubscriptionInput, ESubscriptionConsumerType, Error, ESubscriptionSourceType, SubscriptionDocument } from 'src/types';
 import { SingleSubscriberService } from 'src/modules/Subscribers/services';
-import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Controller()
 export class SingleSubscriberListener {
