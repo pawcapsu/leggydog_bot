@@ -28,7 +28,9 @@ export class BotInstanceService {
     this.bot = new Bot(process.env.TELEGRAM_KEY);
 
     // Fetching languages
-    this.languagesService.fetchLanguages();
+    setInterval(() => {
+      this.languagesService.fetchLanguages();
+    }, 5000);
 
     // Adding command listener
     this.bot.on('message', (ctx) => {

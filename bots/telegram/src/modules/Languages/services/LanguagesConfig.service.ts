@@ -51,6 +51,7 @@ export class LanguagesConfigService {
     
     // Saving fethed languages into class's public
     // properties
+    this.languages = [];
     languages.forEach((rawLanguage) => {
       const language = new Language(rawLanguage.name, rawLanguage.properties);
       this.languages.push(language);
