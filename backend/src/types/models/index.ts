@@ -1,3 +1,3 @@
 export * from './Channel';
 export * from './Subscription';
-export * from './Error';
+export * from './Languages';

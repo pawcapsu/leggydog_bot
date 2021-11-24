@@ -1,8 +1,8 @@
 import { Schema, Prop } from '@nestjs/mongoose';
-import { EChannelActionType, IChannelAction } from '@app/services';
+import { EChannelActionType } from 'src/types';
 
 @Schema()
-export class ChannelAction implements IChannelAction {
+export class ChannelAction {
   @Prop({ type: String, enum: Object.keys(EChannelActionType), required: true })
   type: EChannelActionType;
 
