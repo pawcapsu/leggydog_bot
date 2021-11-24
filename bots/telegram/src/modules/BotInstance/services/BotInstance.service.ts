@@ -26,12 +26,7 @@ export class BotInstanceService {
   ) {
     // Creating new bot instance
     this.bot = new Bot(process.env.TELEGRAM_KEY);
-
-    // Fetching languages
-    setInterval(() => {
-      this.languagesService.fetchLanguages();
-    }, 5000);
-
+    
     // Adding command listener
     this.bot.on('message', (ctx) => {
       if (ctx.update?.message?.text) {
@@ -67,6 +62,17 @@ export class BotInstanceService {
   public start() {
     this.logger.warn('Starting BotInstance');
     run(this.bot);
+  
+    // Fetching languages
+    this.languagesService.fetchLanguages();
+    
+    // Setting interval to continuosly update languages
+    // array
+    setInterval(async () => {
+      this.logger.debug('Updating languages');
+      await this.languagesService.fetchLanguages();
+    // +todo change interval (30 minute, 1 hour, or something else)
+    }, 5000);
   };
 
   // public register

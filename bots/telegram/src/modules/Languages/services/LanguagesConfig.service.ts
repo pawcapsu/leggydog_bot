@@ -30,7 +30,8 @@ export class LanguagesConfigService {
   // public getByName
   // - Returns l
   public getByName(name: string): Language | null {
-    return this.languages.find((lang) => lang.name == name);
+    console.log(name);
+    return this.languages.find((lang) => lang.name == name) ?? this.languages[0];
   };
 
   // public fetchLanguages
