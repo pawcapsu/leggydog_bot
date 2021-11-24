@@ -14,6 +14,9 @@ export class Error {
     // ErrorType - TIMEDOUT
     if (type == ErrorType.TIMEDOUT) {
       this.message = 'Timedout request.'
+    } else if (type == ErrorType.UNKNOWN) {
+      // +todo
+      this.message = 'Unknown error';
     };
 
     if (message) this.message += ` ${message}`;

@@ -2,8 +2,8 @@ import { Injectable, OnApplicationBootstrap} from "@nestjs/common";
 import { ModuleRef } from '@nestjs/core';
 import { Context } from "grammy";
 import { BotInstanceService } from "src/modules/BotInstance/services";
-import { MenuCommandService } from "src/commands/MenuCommand/services";
 import { ERegisterScriptType, IBotCommand } from "src/types";
+import { LanguagesMenuService } from "src/commands/LanguageCommand/services";
 
 // Exporting StartCommand
 @Injectable()
@@ -13,7 +13,7 @@ export class StartCommand implements OnApplicationBootstrap, IBotCommand {
     private readonly moduleRef: ModuleRef,
     private readonly instance: BotInstanceService,
 
-    private readonly service: MenuCommandService,
+    private readonly service: LanguagesMenuService,
   ) {}
 
   // registering 
@@ -27,7 +27,7 @@ export class StartCommand implements OnApplicationBootstrap, IBotCommand {
 
   // - run command
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder('');
+    const message = await this.service.messageBuilder('SystemPrompt');
     ctx.reply(message.text, message.options);
   };
 };

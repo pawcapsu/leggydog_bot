@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { run } from '@grammyjs/runner';
 import { Bot } from "grammy";
 import { ERegisterScriptType, IBotCallback, IBotCommand, TRegisterScriptInstanceType } from "src/types";
+import { LanguagesConfigService } from "src/modules/Languages/services";
 
 @Injectable()
 export class BotInstanceService {
@@ -20,9 +21,14 @@ export class BotInstanceService {
   // Registered customs
 
   //
-  constructor() {
+  constructor(
+    private readonly languagesService: LanguagesConfigService
+  ) {
     // Creating new bot instance
     this.bot = new Bot(process.env.TELEGRAM_KEY);
+
+    // Fetching languages
+    this.languagesService.fetchLanguages();
 
     // Adding command listener
     this.bot.on('message', (ctx) => {
