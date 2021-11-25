@@ -11,6 +11,9 @@ export class ChannelState {
   @Prop({ type: String, required: true })
   identifier: number | string;
 
+  @Prop({ type: Boolean, required: false, default: false })
+  active?: boolean;
+
   @Prop({ type: Object, required: false })
   action?: ChannelAction;
 

@@ -1,2 +1,1 @@
-export * from './ChannelAction.listener';
-export * from './ChannelLanguage.listener';
+export * from './Channel.listener';
