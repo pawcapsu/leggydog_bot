@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ChannelStateSchema } from 'src/types';
+import { ChannelActionSchema, ChannelStateSchema } from 'src/types';
 
 import * as Listeners from './listeners';
 import * as Services from './services';

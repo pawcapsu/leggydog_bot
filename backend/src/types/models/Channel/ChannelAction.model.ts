@@ -1,5 +1,8 @@
-import { Schema, Prop } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import { EChannelActionType } from 'src/types';
+
+export type ChannelActionDocument = ChannelAction & Document;
 
 @Schema()
 export class ChannelAction {
@@ -9,3 +12,5 @@ export class ChannelAction {
   @Prop({ type: Object, required: false })
   data?: any;
 }
+
+export const ChannelActionSchema = SchemaFactory.createForClass(ChannelAction);

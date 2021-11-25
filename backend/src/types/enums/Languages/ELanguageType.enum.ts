@@ -1,4 +1,4 @@
 export enum ELanguageType {
   RU = 'Russian',
-  EN = 'ENGLISH'
+  EN = 'English'
 };

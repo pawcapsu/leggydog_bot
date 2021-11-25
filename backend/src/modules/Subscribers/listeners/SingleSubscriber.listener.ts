@@ -20,7 +20,7 @@ export class SingleSubscriberListener {
       // Checking source type
       if (data.source.type == ESubscriptionSourceType.E621) {
         // Creating new subscriber
-        return await this.subscriberService.createSubscriber({
+        const subscriber = await this.subscriberService.createSubscriber({
           consumer: {
             type: data.consumer.type,
             identifier: data.consumer.identifier,
@@ -32,6 +32,8 @@ export class SingleSubscriberListener {
             tags: data.source.tags,
           }
         });
+
+        return subscriber;
       };
     };
   };

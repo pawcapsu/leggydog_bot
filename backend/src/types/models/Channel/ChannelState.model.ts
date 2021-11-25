@@ -1,8 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { IChannelState } from '@app/services';
 import { Document } from 'mongoose';
 import { ChannelAction } from '.';
-import { ELanguageType } from 'src/types';
+import { ChannelActionSchema, ELanguageType } from 'src/types';
 
 export type ChannelStateDocument = Document & ChannelState;
 
@@ -14,6 +13,8 @@ export class ChannelState {
   @Prop({ type: Boolean, required: false, default: false })
   active?: boolean;
 
+  // +todo
+  // proper mongoose prop type (ChannelActionSchema)
   @Prop({ type: Object, required: false })
   action?: ChannelAction;
 
