@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, firstValueFrom, of, timeout } from 'rxjs';
-import { ChannelStateService } from 'src/modules/Channel/services';
+import { ChannelService } from 'src/modules/Channel/services';
 import { Error as SystemError, Language, LanguageProperty } from 'src/types';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class LanguagesConfigService {
     @Inject('DATA_REQUESTS')
     private readonly client: ClientProxy,
 
-    private readonly channelStateService: ChannelStateService,
+    private readonly ChannelService: ChannelService,
   ) {}
 
   // Properties
@@ -18,10 +18,9 @@ export class LanguagesConfigService {
   private logger = new Logger(LanguagesConfigService.name);
 
   // getByChannel
-  public async getByChannel(chat_id: string): Promise<Language | null> {
+  public async getByChannel(chat_id: string): Promise<Language> {
     // Fetching ChannelState
-    const channel = await this.channelStateService.fetchOne(chat_id);
-    if (channel instanceof SystemError) throw new Error(JSON.stringify(channel));
+    const channel = await this.ChannelService.fetchOne(chat_id);
 
     const language = this.getByName(channel.language ?? 'English');
     return language;
@@ -29,8 +28,7 @@ export class LanguagesConfigService {
 
   // public getByName
   // - Returns l
-  public getByName(name: string): Language | null {
-    console.log(name);
+  public getByName(name: string): Language {
     return this.languages.find((lang) => lang.name == name) ?? this.languages[0];
   };
 
@@ -44,11 +42,17 @@ export class LanguagesConfigService {
           .pipe(
             timeout(5000),
             catchError(() => {
-              throw new Error('Error while trying to fetch languages: Timedout');
+              return of(null)
             }),
           )
         );
-      
+
+    if (!languages) {
+      this.logger.warn('LanguagesFetcher error');
+      return;
+    };
+
+    this.logger.debug('Languages fetched and is due to be saved.');
     
     // Saving fethed languages into class's public
     // properties

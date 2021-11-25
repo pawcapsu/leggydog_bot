@@ -4,7 +4,8 @@ import { BotInstanceService } from 'src/modules/BotInstance/services';
 import { ERegisterScriptType, IBotCallback, IBotCommand } from 'src/types';
 import { LanguagesMenuService } from 'src/commands/LanguageCommand/services';
 import { Context } from 'grammy';
-import { ChannelStateService } from 'src/modules/Channel/services';
+import { ChannelService } from 'src/modules/Channel/services';
+import { ErrorHandlerService } from 'src/modules/ErrorHandler/services';
 
 // Command
 @Injectable()
@@ -39,7 +40,7 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
     private readonly moduleRef: ModuleRef,
 
     private readonly service: LanguagesMenuService,
-    private readonly channelService: ChannelStateService,  
+    private readonly channelService: ChannelService,  
   ) {}
 
   // Registering command
@@ -53,6 +54,13 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
   public async run(ctx: Context) {
     const chat_id = String(ctx.update?.callback_query?.from?.id);
     const language = ctx.update?.callback_query?.data?.replace('setLanguage-', '');
+
+    // Checking if this channel is activated
+    const isActive = await this.channelService.isActive(chat_id);
+    if (!isActive) {
+      // Activating channel
+      await this.channelService.activate(chat_id);
+    };
 
     await this.channelService.updateLanguage(String(chat_id), language);
     const message = await this.service.messageBuilder(chat_id, 'SystemPrompt');

@@ -1,4 +1,6 @@
 export enum ErrorType {
   TIMEDOUT = 'TIMEDOUT',
   UNKNOWN = 'UNKNOWN',
+
+  DEACTIVATED = 'DEACTIVATED',
 };

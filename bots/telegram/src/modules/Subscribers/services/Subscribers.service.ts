@@ -12,6 +12,7 @@ export class SubscriberService {
   ) {}
 
   // public fetchMany
+  // +todo
   public async fetchMany(chat_id: string | number) {
     return await firstValueFrom(
       this.client
@@ -19,7 +20,7 @@ export class SubscriberService {
         .pipe(
           timeout(2000),
           catchError((error) => {
-            return of(new Error(ErrorType.TIMEDOUT, 'Unable to fetch Subscribers array. Probably due to message broker error.'));
+            throw new Error(ErrorType.TIMEDOUT, 'Unable to fetch Subscribers array. Probably due to message broker error.');
           })
         )
     );

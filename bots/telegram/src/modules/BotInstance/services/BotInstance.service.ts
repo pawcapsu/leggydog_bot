@@ -1,8 +1,11 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { run } from '@grammyjs/runner';
 import { Bot } from "grammy";
-import { ERegisterScriptType, IBotCallback, IBotCommand, TRegisterScriptInstanceType } from "src/types";
+import { EParseMode, ERegisterScriptType, Error, IBotCallback, IBotCommand, TRegisterScriptInstanceType } from "src/types";
 import { LanguagesConfigService } from "src/modules/Languages/services";
+import { ChannelService } from "src/modules/Channel/services";
+import { ErrorHandlerService } from "src/modules/ErrorHandler/services";
+import { ErrorType } from "src/types/enums/Errors";
 
 @Injectable()
 export class BotInstanceService {
@@ -22,13 +25,15 @@ export class BotInstanceService {
 
   //
   constructor(
-    private readonly languagesService: LanguagesConfigService
+    private readonly channelService: ChannelService,
+    private readonly languagesService: LanguagesConfigService,
+    private readonly errorsService: ErrorHandlerService,
   ) {
     // Creating new bot instance
     this.bot = new Bot(process.env.TELEGRAM_KEY);
     
     // Adding command listener
-    this.bot.on('message', (ctx) => {
+    this.bot.on('message', async (ctx) => {
       if (ctx.update?.message?.text) {
         // Finding command with this pattern
         const command = ctx.update?.message?.text.replace('/', '');
@@ -37,13 +42,41 @@ export class BotInstanceService {
         // Checking if instance of this command even exists
         if (!instance) return;
 
-        // Running this command
-        instance.run(ctx);
+        // Checking if bot is active for this channel
+        const chat_id = String(ctx.update?.message?.from?.id);
+        let isActive = false;
+        try {
+          // +todo add basic cache system
+          // to speed things up
+          isActive = await this.channelService.isActive(chat_id);
+        } catch {
+          // +todo
+        };
+
+        // hard-coded lol
+        if (!isActive && command != 'start') {
+          const message = this.errorsService.messageBuilder(new Error(ErrorType.DEACTIVATED));
+          ctx.reply(message.text, message.options);
+
+          return;
+        };
+
+        // Running this command in
+        // a sandbox to catch all errors
+        instance.run(ctx)
+        .catch(async (error: any) => {
+          // Handle error
+          this.logger.error('Command sandbox error');
+          console.error(error);
+
+          const message = this.errorsService.messageBuilder(error as Error);
+          ctx.reply(message.text, message.options);
+        });
       };
     });
 
     // Callback listener
-    this.bot.on("callback_query:data", (ctx) => {
+    this.bot.on("callback_query:data", async (ctx) => {
       if (ctx.update.callback_query?.data) {
         // Finding command with this pattern
         const callback = ctx.update.callback_query?.data;
@@ -52,8 +85,38 @@ export class BotInstanceService {
         // Checking if instance of this command even exists
         if (!instance) return;
 
-        // Running this command
-        instance.run(ctx);
+        // Checking if bot is active for this channel
+        const chat_id = String(ctx.update?.callback_query?.from?.id);
+        let isActive = false;
+        try {
+          // +todo add basic cache system
+          // to speed things up
+          isActive = await this.channelService.isActive(chat_id);
+        } catch {
+          // +todo
+        };
+
+        if (!isActive && !ctx.update?.callback_query?.data.includes('setLanguage-')) {
+          const message = this.errorsService.messageBuilder(new Error(ErrorType.DEACTIVATED));
+          ctx.reply(message.text, message.options);
+
+          return;
+        };
+
+        // Running this callback in a sandbox
+        // to catch all errors
+        try {
+          await instance.run(ctx);
+        } catch(error: any) {
+          // Handle error
+          // +todo
+          // proper handling
+          this.logger.error('Callback sandbox error', error);
+          console.error(error);
+
+          const message = this.errorsService.messageBuilder(error as Error);
+          ctx.reply(message.text, message.options);
+        };
       };
     });
   }
@@ -62,17 +125,6 @@ export class BotInstanceService {
   public start() {
     this.logger.warn('Starting BotInstance');
     run(this.bot);
-  
-    // Fetching languages
-    this.languagesService.fetchLanguages();
-    
-    // Setting interval to continuosly update languages
-    // array
-    setInterval(async () => {
-      this.logger.debug('Updating languages');
-      await this.languagesService.fetchLanguages();
-    // +todo change interval (30 minute, 1 hour, or something else)
-    }, 5000);
   };
 
   // public register

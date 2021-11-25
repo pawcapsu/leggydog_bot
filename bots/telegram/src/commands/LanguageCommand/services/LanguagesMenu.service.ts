@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InlineKeyboard } from 'grammy';
 import { _escapeCharacters } from 'src/helpers';
 import { LanguagesConfigService } from 'src/modules/Languages/services';
+import { ErrorHandlerService } from 'src/modules/ErrorHandler/services';
 import { EParseMode } from 'src/types';
+import { Error } from 'src/types';
 
 @Injectable()
 export class LanguagesMenuService {
   constructor(
     private readonly languageService: LanguagesConfigService,
+    private readonly errorsService: ErrorHandlerService,
   ) {}
 
   // messageBuilder

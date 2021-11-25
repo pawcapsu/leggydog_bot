@@ -17,10 +17,6 @@ export class MenuCommandService {
     const subscribers = [];
     if (chat_id) {
       const response = await this.subscribersService.fetchMany(chat_id);
-      if (response instanceof Error) {
-        // Returning error message
-        return this.errorService.messageBuilder(response);
-      };
 
       subscribers.push(...response);
     };

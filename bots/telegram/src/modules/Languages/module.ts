@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ChannelModule } from 'src/modules/Channel/module';
 
+import * as Controllers from './controllers';
 import * as Services from './services';
 
 @Module({
@@ -23,7 +24,7 @@ import * as Services from './services';
       },
     ])
   ],
-  providers: [...Object.values(Services)],
+  providers: [...Object.values(Services), ...Object.values(Controllers)],
   exports: [...Object.values(Services)],
 })
 export class LanguagesModule {}
