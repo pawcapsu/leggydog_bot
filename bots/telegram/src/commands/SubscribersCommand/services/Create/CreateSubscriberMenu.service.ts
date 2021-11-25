@@ -1,33 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { InlineKeyboard } from 'grammy';
 import { _escapeCharacters } from 'src/helpers';
+import { LanguagesConfigService } from 'src/modules/Languages/services';
 import { EParseMode } from 'src/types';
 
 @Injectable()
 export class CreateSubscriberService {
+  constructor(
+    private readonly languageService: LanguagesConfigService,
+  ) {}
+
   // public messageBuilder
-  public messageBuilder(type: "CreateNew" | "Subscribed" | "TagsError", tags?: String[]) {
+  public async messageBuilder(chat_id: string, type: "CreateNew" | "Subscribed" | "TagsError", tags?: String[]) {
+    const language = await this.languageService.getByChannel(chat_id);
+    
     if (type === "CreateNew") {
       return {
-        text: _escapeCharacters("*Создать новую подписку*\n\nСоздавая подписку, вы подписываетесь на определённые теги на сайте *E621*.\n\nВам будут присылаться все новые картинки, вне зависимости от рейтинга, комментариев либо других тегов.\n\nДля того, что бы подписаться на какие-либо теги, *просто впишите в чат теги через пробел*.\n\nСписок всех доступных тегов: [Ссылка](https://e621.net/tags)"),
+        text: _escapeCharacters(language.get('subscriber.create.createNew')),
         options: {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard().
-            text("Cancel", "cancelSubscriberCreation")
+            text(language.get('common.buttons.cancel'), "cancelSubscriberCreation")
         },
       };
     } else if (type === "Subscribed") {
       return {
-        text: _escapeCharacters(`*Вы подписали на теги*\n\`${ tags.join(", ") }\`\n\nТеперь я буду отправлять вам все самые новые картинки по этим тегам, ура-ура-ура!\n\nВ ближайшие несколько минут придёт ваша самая первая картинка, в которой будет описанно что с ней можно делать дальше.\n\nОсталось просто подождать!`),
+        text: _escapeCharacters(language.get('subscriber.create.subscribed', { tags })),
         options: {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard()
-            .text("Go to main menu", "openStartMenu")
+            .text(language.get('common.buttons.openMainMenu'), "openStartMenu")
         },
       };
     } else if (type === "TagsError") {
       return {
-        text: _escapeCharacters(`Ошибка!\n\n*Данные теги:* \n\n\`${ tags.join(", ") }\` \n\n*не существуют.*\n\nПожалуйста, попробуйте снова. Вот, кстати, весь список доступных тегов: [Ссылка](https://e621.net/tags)`),
+        text: _escapeCharacters(language.get('subscriber.create.tagsError', { tags })),
         options: {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard()

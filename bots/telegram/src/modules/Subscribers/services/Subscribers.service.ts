@@ -28,5 +28,37 @@ export class SubscriberService {
 
   // public fetchOne
 
-  // public createOne
+  // public create
+  public async create(chat_id: string, tags: string[]) {
+    // Forming payload
+    // +todo add some kind of a shared input class for
+    // backend and telegram service
+    const payload = {
+      consumer: {
+        type: 'TELEGRAM',
+        identifier: chat_id,
+      },
+
+      source: {
+        type: 'E621',
+
+        // ESix-related
+        tags: tags,
+      }
+    };
+
+    console.log(payload);
+
+    // Making request
+    return await firstValueFrom(
+      this.client
+        .send('subscriber::create', payload)
+        .pipe(
+          timeout(5000),
+          catchError((error) => {
+            throw new Error(ErrorType.UNKNOWN, 'Unknown error while trying to create subscriber');
+          })
+        )
+    );
+  };
 };

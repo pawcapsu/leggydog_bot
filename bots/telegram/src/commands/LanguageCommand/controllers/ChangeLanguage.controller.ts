@@ -62,7 +62,7 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
       await this.channelService.activate(chat_id);
     };
 
-    await this.channelService.updateLanguage(String(chat_id), language);
+    await this.channelService.update(String(chat_id), { language });
     const message = await this.service.messageBuilder(chat_id, 'SystemPrompt');
     
     // +todo

@@ -37,10 +37,10 @@ export class BotInstanceService {
       if (ctx.update?.message?.text) {
         // Finding command with this pattern
         const command = ctx.update?.message?.text.replace('/', '');
-        const instance = this.commands.find((x) => x.pattern.test(command));
+        const instances = this.commands.filter((x) => x.pattern.test(command));
 
         // Checking if instance of this command even exists
-        if (!instance) return;
+        if (instances.length <= 0) return;
 
         // Checking if bot is active for this channel
         const chat_id = String(ctx.update?.message?.from?.id);
@@ -63,14 +63,16 @@ export class BotInstanceService {
 
         // Running this command in
         // a sandbox to catch all errors
-        instance.run(ctx)
-        .catch(async (error: any) => {
-          // Handle error
-          this.logger.error('Command sandbox error');
-          console.error(error);
-
-          const message = this.errorsService.messageBuilder(error as Error);
-          ctx.reply(message.text, message.options);
+        instances.forEach((instance) => {
+          instance.run(ctx)
+          .catch(async (error: any) => {
+            // Handle error
+            this.logger.error('Command sandbox error');
+            console.error(error);
+  
+            const message = this.errorsService.messageBuilder(error as Error);
+            ctx.reply(message.text, message.options);
+          });
         });
       };
     });
@@ -80,10 +82,10 @@ export class BotInstanceService {
       if (ctx.update.callback_query?.data) {
         // Finding command with this pattern
         const callback = ctx.update.callback_query?.data;
-        const instance = this.callbacks.find((x) => x.pattern.test(callback));
+        const instances = this.callbacks.filter((x) => x.pattern.test(callback));
 
         // Checking if instance of this command even exists
-        if (!instance) return;
+        if (instances.length <= 0) return;
 
         // Checking if bot is active for this channel
         const chat_id = String(ctx.update?.callback_query?.from?.id);
@@ -105,18 +107,17 @@ export class BotInstanceService {
 
         // Running this callback in a sandbox
         // to catch all errors
-        try {
-          await instance.run(ctx);
-        } catch(error: any) {
-          // Handle error
-          // +todo
-          // proper handling
-          this.logger.error('Callback sandbox error', error);
-          console.error(error);
-
-          const message = this.errorsService.messageBuilder(error as Error);
-          ctx.reply(message.text, message.options);
-        };
+        instances.forEach((instance) => {
+          instance.run(ctx)
+          .catch(async (error: any) => {
+            // Handle error
+            this.logger.error('Callback sandbox error');
+            console.error(error);
+  
+            const message = this.errorsService.messageBuilder(error as Error);
+            ctx.reply(message.text, message.options);
+          });
+        });
       };
     });
   }

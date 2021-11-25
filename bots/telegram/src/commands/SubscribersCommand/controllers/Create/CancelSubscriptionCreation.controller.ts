@@ -2,8 +2,10 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { Context } from 'grammy';
 import { BotInstanceService } from 'src/modules/BotInstance/services';
-import { MenuCommandService } from 'src/commands/MenuCommand/services';
+import { SubscribersMenuService } from 'src/commands/SubscribersCommand/services';
 import { ERegisterScriptType, IBotCallback } from 'src/types';
+import { ChannelService } from 'src/modules/Channel/services';
+import { CacheService } from 'src/modules/SimpleCache/services';
 
 // Callback
 @Injectable()
@@ -11,7 +13,10 @@ export class CancelSubscriberCreationController implements OnApplicationBootstra
   constructor(
     private readonly instance: BotInstanceService,
     private readonly moduleRef: ModuleRef,
-    private readonly service: MenuCommandService,
+    
+    private readonly cache: CacheService,
+    private readonly service: SubscribersMenuService,
+    private readonly channelService: ChannelService,  
   ) {}
   
   // Registering callback
@@ -23,9 +28,15 @@ export class CancelSubscriberCreationController implements OnApplicationBootstra
   public pattern = /cancelSubscriberCreation/;
 
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id));
+    const message = await this.service.messageBuilder();
     
-    // Updating ChannelState
+    // Updating channel state
+    // Do we even need this anymore?
+    const chat_id = String(ctx.update?.callback_query?.from.id);
+    // await this.channelService.update(String(ctx.update?.callback_query?.from.id), { action: { type: 'NONE' } });
+    
+    // Updating cached value
+    this.cache.set(`channel-isCreatingNewSubscriber-${chat_id}`, false);
 
     ctx.editMessageText(message.text, message.options);
     // +todo

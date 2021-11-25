@@ -18,7 +18,7 @@ export class ChannelService {
   public async fetchOne(chat_id: string): Promise<IChannelState> {
     return await firstValueFrom(
       this.client
-        .send('channel::fetch', { identifier: String(chat_id) })
+        .send('channel::fetchOne', { identifier: String(chat_id) })
         .pipe(
           timeout(2000),
           catchError((error) => {
@@ -28,11 +28,27 @@ export class ChannelService {
     );
   };
 
+  // public update
+  // - Update channel's language
+  // +todo create UpdateChannelInput for data property in shared project
+  public async update(chat_id: string, data: { language?: string, action?: { type: string, data?: any } }): Promise<IChannelState> {
+    return await firstValueFrom(
+      this.client.send('channel::update', { identifier: chat_id, data })
+      .pipe(
+        timeout(2000),
+        // +todo proper error catching
+        catchError(() => {
+          throw new Error(ErrorType.UNKNOWN, 'ChannelService->update')
+        })
+      )
+    );
+  };
+
   // public isActive
   public async isActive(chat_id: string): Promise<boolean> {
     // Checking if we have this value cached
-    let isActive = false;
-    if (this.cache.get(`channel-isActive-${chat_id}`)) {
+    let isActive = this.cache.get(`channel-isActive-${chat_id}`);
+    if (!isActive) {
       const channel = await this.fetchOne(chat_id);
       isActive = channel.active;
 
@@ -83,20 +99,5 @@ export class ChannelService {
 
     // Returning
     return response;
-  };
-
-  // public updateLanguage
-  // - Update channel's language
-  public async updateLanguage(chat_id: string, language: string): Promise<Error | IChannelState> {
-    return await firstValueFrom(
-      this.client.send('channel::changeLanguage', { identifier: chat_id, language: language })
-      .pipe(
-        timeout(2000),
-        // +todo proper error catching
-        catchError(() => {
-          return of(new Error(ErrorType.UNKNOWN, 'ChannelService'))
-        })
-      )
-    );
   };
 };
