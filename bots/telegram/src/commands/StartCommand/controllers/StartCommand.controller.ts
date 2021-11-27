@@ -27,7 +27,7 @@ export class StartCommand implements OnApplicationBootstrap, IBotCommand {
 
   // - run command
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder('SystemPrompt');
+    const message = await this.service.messageBuilder(String(ctx.update?.message?.from.id), 'SystemPrompt');
     ctx.reply(message.text, message.options);
   };
 };

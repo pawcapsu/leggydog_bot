@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { run } from '@grammyjs/runner';
-import { Bot } from "grammy";
+import { Bot, GrammyError, HttpError } from "grammy";
 import { EParseMode, ERegisterScriptType, Error, IBotCallback, IBotCommand, TRegisterScriptInstanceType } from "src/types";
 import { LanguagesConfigService } from "src/modules/Languages/services";
 import { ChannelService } from "src/modules/Channel/services";
@@ -125,6 +125,10 @@ export class BotInstanceService {
   // public start
   public start() {
     this.logger.warn('Starting BotInstance');
+    
+    // +todo
+    // catch all GrammyError or HttpError errors
+    // https://grammy.dev/guide/errors.html
     run(this.bot);
   };
 

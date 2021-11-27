@@ -28,6 +28,6 @@ export class MenuCommand implements OnApplicationBootstrap, IBotCommand {
   // - run command
   public async run(ctx: Context) {
     const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id));
-    ctx.reply(message.text, message.options);
+    ctx.reply(message.text, message.options)
   };
 };

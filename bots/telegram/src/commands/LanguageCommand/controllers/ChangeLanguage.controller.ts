@@ -5,7 +5,7 @@ import { ERegisterScriptType, IBotCallback, IBotCommand } from 'src/types';
 import { LanguagesMenuService } from 'src/commands/LanguageCommand/services';
 import { Context } from 'grammy';
 import { ChannelService } from 'src/modules/Channel/services';
-import { ErrorHandlerService } from 'src/modules/ErrorHandler/services';
+import { MenuCommandService } from 'src/commands/MenuCommand/services';
 
 // Command
 @Injectable()
@@ -25,7 +25,7 @@ export class ChangeLanguageCommand implements OnApplicationBootstrap, IBotComman
   public pattern = /languages/;
 
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id), 'UserDecision');
+    const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id));
     // +todo
     ctx.reply(message.text, message.options);
   };
@@ -40,6 +40,7 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
     private readonly moduleRef: ModuleRef,
 
     private readonly service: LanguagesMenuService,
+    private readonly menuService: MenuCommandService,
     private readonly channelService: ChannelService,  
   ) {}
 
@@ -53,7 +54,18 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
   
   public async run(ctx: Context) {
     const chat_id = String(ctx.update?.callback_query?.from?.id);
-    const language = ctx.update?.callback_query?.data?.replace('setLanguage-', '');
+    
+    let language = ctx.update?.callback_query?.data?.replace('setLanguage-', '');
+    let options = {
+      fromSettings: false,
+    };
+
+    // +todo
+    // make this somewhat easy?
+    if (language.includes('/fromSettings')) {
+      language = language.replace('/fromSettings', '');
+      options.fromSettings = true;
+    };
 
     // Checking if this channel is activated
     const isActive = await this.channelService.isActive(chat_id);
@@ -62,10 +74,20 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
       await this.channelService.activate(chat_id);
     };
 
-    await this.channelService.update(String(chat_id), { language });
-    const message = await this.service.messageBuilder(chat_id, 'SystemPrompt');
-    
+    const channel = await this.channelService.fetchOne(chat_id);
+    if (channel.language == language) return;
+
+    await this.channelService.update(chat_id, { language });
+
+    let message;
+    if (isActive) {
+      message = await this.service.messageBuilder(chat_id, 'UserDecision', options.fromSettings);
+    } else {
+      message = await this.menuService.messageBuilder(String(ctx.update?.callback_query?.from.id));
+    };
+
     // +todo
+    // Something strange is happening here
     ctx.editMessageText(message.text, message.options);
   };
 };
