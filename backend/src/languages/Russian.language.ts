@@ -5,15 +5,90 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
 {
   name: 'Russian',
   properties: [
-    // Languages Menu
+    // Start Menu
     {
-      key: 'languages.chooseText',
-      value: 'Русская швайна йа-йа-йа'
+      key: 'start',
+      value: '*Leggydog Bot*\n\n*Please, choose your prefered language.*',
+    },
+
+    // 
+    // Settings menu
+    {
+      key: 'settings',
+      value: '*Настройки*\n\nМеню с настройками, с помощью которых вы сможете настроить этого бота под все ваши нужды!\n\nВ будующем сюда будет добавляться огромное количество крутых и интересных настроек, так что следите за обновлениями!'
+    },
+
+    // - buttons
+
+    {
+      key: 'settings.button.returnToSettings',
+      value: 'Вернуться к Настройкам',
     },
 
     {
+      key: 'settings.buttons.language',
+      value: 'Изменить язык',
+    },
+
+    // Dashboard Menu
+    {
+      key: 'dashboard.introduction',
+      value: "*Leggydog*\n\nПриветствую! Я очень рад что ты решил мною попользоваться, это прям невероятно круто и странно звучит! Ладно, проехали эту плохую шутку. Я бот, который будет следить за новыми постами на разных сайтах, и отправлять тебе самый свежий контент! На данный момент я поддерживаю только *E621*, но скоро добавится намного больше сайтов.\n\n\nЯ буду тебе помогать во всём, чём только смогу. Для того, что бы начать пользование, вам нужно зайти в меню \\`🔭 Подписки\\`. Увидимся в этом меню!"
+    },
+
+    {
+      key: 'dashboard',
+      value: '*Dashboard*\n\nДоброго времени суток, человек! Надеюсь что на сегодня ты надумал что-то крутое :>\n\n*Кол-во подписок:* ${ variables.subscribers.length } шт.\n_Подписка хранит в себе теги, по которым мы ищем новые картинки для вас._',
+      acceptedVariables: [
+        {
+          name: 'subscribers',
+          required: true
+        }
+      ],
+    },
+
+    // Buttons
+    {
+      key: 'dashboard.buttons.subscribers',
+      value: '🔭 Подписки',
+    },
+
+    {
+      key: 'dashboard.buttons.settings',
+      value: 'ℹ️ Настройки',
+    },
+
+    {
+      key: 'dashboard.buttons.learnMore',
+      value: 'Узнать больше',
+    },
+
+    {
+      key: 'dashboard.buttons.otherServices',
+      value: 'Другие сервисы'
+    },
+
+    // Languages Menu
+    {
+      key: 'languages',
+      value: 'Русская швайна йа-йа-йа'
+    },
+
+    // Common
+    // - buttons
+    {
       key: 'common.buttons.openMainMenu',
-      value: 'Вернуться в главное меню'
+      value: 'В главное меню'
+    },
+
+    {
+      key: 'common.buttons.cancel',
+      value: 'Отмена',
+    },
+
+    {
+      key: 'common.buttons.close',
+      value: '❌ Закрыть',
     },
 
     // Create subscriber
@@ -36,19 +111,13 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
     },
 
     {
-      key: 'common.buttons.cancel',
-      value: 'Отмена',
+      key: 'languages.russian',
+      value: 'Русский',
     },
 
     {
-      key: 'test',
-      value: 'Test value ${ variables.testVariable }',
-      acceptedVariables: [
-        {
-          name: 'testVariable',
-          required: true
-        }
-      ]
+      key: 'languages.english',
+      value: 'English',
     }
   ]
 };

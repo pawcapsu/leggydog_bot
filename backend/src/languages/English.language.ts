@@ -6,9 +6,68 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
   name: 'English',
   properties: [
     // Start Menu
-    // {
-    //   key: ''
-    // }
+    {
+      key: 'start',
+      value: '*Leggydog Bot*\n\n*Please, choose your prefered language.*',
+    },
+
+    // 
+    // Settings menu
+    {
+      key: 'settings',
+      value: '*Settings*\n\nMenu with settings that can help you customize this bot for all your needs! There will be a lot of cool and interesting settings to be added in the future, so stay tuned!'
+    },
+
+    // - buttons
+
+    {
+      key: 'settings.button.returnToSettings',
+      value: 'Back to Settings Menu',
+    },
+
+    {
+      key: 'settings.buttons.language',
+      value: 'Change language',
+    },
+
+    // 
+    // Dashboard Menu
+    {
+      key: 'dashboard.introduction',
+      value: "*Leggydog*\n\nGreetings! I'm so glad you decided to take advantage of me, that sounds incredibly cool and weird! Okay, forget the bad joke. I'm a bot that will keep track of new posts on various sites, and send you the latest content! At the moment, I only support *E621*, but there will be many more sites added soon.\n\n\n\n I'll help you in any way I can. In order to start using, you need to go to the menu \\`🔭 Subscribers\\`. See you in that menu!",
+    },
+
+    {
+      key: 'dashboard',
+      value: '*Dashboard*\n\nGood day, man! I hope you have something cool in mind for today :>\n\n*Number of subscriptions:* ${ variables.subscribers.length }\n_Subscription stores the tags by which we look for new pictures for you._',
+      acceptedVariables: [
+        {
+          name: 'subscribers',
+          required: true
+        }
+      ]
+    },
+
+    // - buttons
+    {
+      key: 'dashboard.buttons.subscribers',
+      value: '🔭 Subscribers',
+    },
+
+    {
+      key: 'dashboard.buttons.settings',
+      value: 'ℹ️ Settings',
+    },
+
+    {
+      key: 'dashboard.buttons.learnMore',
+      value: 'Learn more',
+    },
+
+    {
+      key: 'dashboard.buttons.otherServices',
+      value: 'Other services'
+    },
 
     // Common
     // - buttons
@@ -20,6 +79,11 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     {
       key: 'common.buttons.cancel',
       value: 'Cancel',
+    },
+
+    {
+      key: 'common.buttons.close',
+      value: '❌ Close',
     },
 
     // Errors
@@ -35,7 +99,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
       value: `*Create new subscriber*\n\nBy creating a subscription, you subscribe to certain tags on E621.\n\nYou will be sent all new pictures, regardless of rating, comments or other tags.\n\nIn order to subscribe to any tags, simply enter the tags in the chat, separated by a space.\n\nList of all available tags: [Link](https://e621.net/tags)`,
     },
 
-    // Created new subscriber menu
+    // Created new subscriber notification
     {
       key: 'subscriber.create.subscribed',
       value: '*You subscribed to tags*\n\\\`${ variables.tags }\\\`\n\nNow I will send you all the newest pictures by these tags, hooray-hooray-hooray!\n\nIn the next few minutes your very first picture will come, which will describe what you can do with it next.\n\nNow we just have to wait!',
@@ -59,12 +123,20 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
       ],
     },
 
-    // buttons
-
     // Languages Menu
     {
-      key: 'languages.chooseText',
+      key: 'languages',
       value: 'Please, choose your language.\n\nYeah Yeah'
     },
+
+    {
+      key: 'languages.russian',
+      value: 'Русский',
+    },
+
+    {
+      key: 'languages.english',
+      value: 'English',
+    }
   ]
 };
