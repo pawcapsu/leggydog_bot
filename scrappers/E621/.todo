@@ -1,0 +1,2 @@
+E621 scrapper, that scrapps all new posts every 5 seconds
+and sends information about them to { storage } instance

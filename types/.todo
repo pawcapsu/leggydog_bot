@@ -1,0 +1,2 @@
+All interfaces, enums and so and so on needs to be stored here, so
+that all microservices will be able to access them (at the building stage)

@@ -1,0 +1,3 @@
+Instance, that has access to separate MongoDB instance, that downloads
+dumped information from E621 everyday (probably at 7AM) and receives
+new posts from E621 scrapper in real-time.
