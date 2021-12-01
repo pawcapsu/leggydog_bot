@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import * as fs from 'fs';
 import * as csv from 'csvtojson';
+import { Writable } from 'stream';
 
 const gunzip = require('gunzip-file');
 const Downloader = require('nodejs-file-downloader');
@@ -53,7 +54,11 @@ export class DatabaseFilesService {
       });
 
       // Parsing as csv
-      const posts = await csv().fromFile(`./exports/posts.csv`);
+      // const posts = [];
+      const readStream = fs.createReadStream(`./exports/posts.csv`);
+
+      const posts = await csv().fromStream(readStream);
+      console.log(posts[0]);
 
       this.logger.warn(`Loaded ${posts.length} posts. Waiting 10 second and then starting database update process...`);
     };
