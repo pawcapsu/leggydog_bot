@@ -56,7 +56,7 @@ export class DatabaseFilesService {
 
       // Decoding
       this.logger.warn(`Decoding file string with ${unzipped.length} length`);
-      const fileString = new TextDecoder().decode(unzipped);
+      const fileString = fflate.strFromU8(unzipped, true);
 
       this.logger.warn(`Decoding complete. Waiting 10 seconds to parse csv...`);
       await new Promise((resolve) => {
