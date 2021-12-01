@@ -24,7 +24,7 @@ export class DatabaseFilesService {
     
     // Posts download
     if (type == 'Posts') {
-      const filename = `pools-${date}`;
+      const filename = `posts-${date}`;
 
       const downloader = new Downloader({
         url: `${url}/${filename}.csv.gz`,
