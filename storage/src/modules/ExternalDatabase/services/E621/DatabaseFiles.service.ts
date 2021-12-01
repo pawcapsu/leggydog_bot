@@ -45,7 +45,12 @@ export class DatabaseFilesService {
 
       // Unzipping
       this.logger.warn(`Unzipping ${filename}.csv.gz...`);
-      gunzip(`./exports/${filename}.csv.gz`, './exports/posts.csv');
+      await new Promise((resolve) => {
+        gunzip(`./exports/${filename}.csv.gz`, './exports/posts.csv', () => {
+          this.logger.warn('Unzipping done.');
+          resolve({})
+        })
+      });
 
       // Parsing as csv
       const posts = await csv().fromFile(`./exports/posts.csv`);
