@@ -28,6 +28,8 @@ jobs:
       run: |
         cp $PATH_LOCAL/package.json $PATH_LOCAL/dist/package.json
         cp -r $PATH_LOCAL/node_modules $PATH_LOCAL/dist/node_modules
+        cp -r types $PATH_LOCAL/dist/node_modules
+
         cp $PATH_LOCAL/Dockerfile $PATH_LOCAL/dist
     - name: Install CapRover
       run: npm install -g caprover
