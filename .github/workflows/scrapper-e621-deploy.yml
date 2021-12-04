@@ -1,5 +1,4 @@
 name: e621 scrapper deploy
-
 on: push
 
 jobs:
