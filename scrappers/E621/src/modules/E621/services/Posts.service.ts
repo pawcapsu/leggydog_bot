@@ -23,20 +23,26 @@ export class PostsService {
       page?: string,
     },
   ): Promise<Array<IPost>> {
-    const request = await axios.get(
-      `https://e621.net/posts.json?tags=${tags.join('+')}`,
-      {
-        headers: {
-          "User-Agent": "LeggydogBot/1.0 (@SniperFox213 on github)",
-        },
-        params: {
-          limit,
-          page: options?.page ?? null,
-        },
-      }
-    );
-
-    console.log(request);
+    let request;
+    
+    try {
+      await axios.get(
+        `https://e621.net/posts.json?tags=${tags.join('+')}`,
+        {
+          headers: {
+            "User-Agent": "LeggydogBot/1.0 (@SniperFox213 on github)",
+          },
+          params: {
+            limit,
+            page: options?.page ?? null,
+          },
+        }
+      )
+    } catch(error) {
+      console.log('catched shitty error');
+      console.log(error);
+      return;
+    };
 
     const posts: Array<IUnserializedPost> = request.data?.posts;
 

@@ -37,7 +37,6 @@ export class ScrapperService {
     // Getting new posts
     const posts = await this.postsService.fetchMany([], 10, { page: `a${latestPost.id}` });
 
-    
     console.log('new posts:');
     console.log(posts.length);
     
