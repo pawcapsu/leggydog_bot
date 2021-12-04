@@ -1,0 +1,44 @@
+name: e621 scrapper deploy
+
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PATH_LOCAL: "scrappers/E621"
+    strategy:
+      matrix:
+        node-version: [16]
+        npm-version: [7]
+    if: "contains(github.event.head_commit.message, 'scrapper/e621:')"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use node@${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Use npm@${{ matrix.npm-version }}
+      run: npm install -g npm@${{ matrix.npm-version }}
+    - name: Install dependencies
+      run: npm install
+    - name: Bootstrap and Build application
+      run: npm run build:e621
+    - name: Prepare artifact before cloud push
+      run: |
+        cp $PATH_LOCAL/package.json $PATH_LOCAL/dist
+        cp $PATH_LOCAL/package-lock.json $PATH_LOCAL/dist
+        cp $PATH_LOCAL/captain-definition $PATH_LOCAL/dist
+    - name: Install CapRover
+      run: npm install -g caprover
+    - name: Zip aftifact into .tar file
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'tar'
+        filename: '../output.tar'
+        directory: 'scrappers/E621/dist/'
+    - name: Push artifact to private Odzi Platform instance
+      run: |
+        cd scrappers/E621
+        caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} --tarFile=output.tar -a leggydog-e621-service
+        

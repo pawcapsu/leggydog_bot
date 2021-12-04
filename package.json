@@ -8,6 +8,7 @@
     "bootstrap": "lerna clean -y && lerna bootstrap",
     "build:backend": "npm run bootstrap && lerna run build --scope backend",
     "build:telegram": "npm run bootstrap && lerna run build --scope telegram",
-    "build:storage": "npm run bootstrap && lerna run build --scope storage"
+    "build:storage": "npm run bootstrap && lerna run build --scope storage",
+    "build:e621": "npm run bootstrap && lerna run build --scope @scrappers/e621"
   }
 }

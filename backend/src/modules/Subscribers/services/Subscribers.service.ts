@@ -10,10 +10,10 @@ export class SubscribersService {
     private readonly subscriptionModel: Model<SubscriptionDocument>,
   ) {}
 
-  // public fetch
+  // +todo change name
+  // public fetchById
   public async fetch(identifier: string) {
     const subscribers = await this.subscriptionModel.find({ "consumer.identifier": identifier }).exec();
     return subscribers ?? [];
   };
-
 };

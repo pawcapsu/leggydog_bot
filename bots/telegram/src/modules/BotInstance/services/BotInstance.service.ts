@@ -10,7 +10,7 @@ import { ErrorType } from "src/types/enums/Errors";
 @Injectable()
 export class BotInstanceService {
   // Bot instance
-  private bot: Bot;
+  public bot: Bot;
 
   // Logger instance
   private logger = new Logger(BotInstanceService.name);

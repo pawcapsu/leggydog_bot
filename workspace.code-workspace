@@ -11,6 +11,15 @@
     },
     {
       "path": "."
+    },
+    {
+      "path": "scrappers/E621"
+    },
+    {
+      "path": "storage"
+    },
+    {
+      "path": "types"
     }
   ],
   "settings": {}

@@ -5,6 +5,23 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 {
   name: 'English',
   properties: [
+    // Notification
+    {
+      key: 'notification.title',
+      value: '*New Post*\n\n',
+    },
+
+    {
+      key: 'notification.field.description',
+      value: '${ variables.description }\n',
+      acceptedVariables: [
+        {
+          name: 'description',
+          required: true
+        }
+      ]
+    },
+
     // Start Menu
     {
       key: 'start',

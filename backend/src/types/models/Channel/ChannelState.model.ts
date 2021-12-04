@@ -1,7 +1,9 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ChannelAction } from '.';
-import { ChannelActionSchema, ELanguageType } from 'src/types';
+import { ELanguageType } from 'src/types';
+import { ChannelSettings, ChannelSettingsSchema } from './Settings';
+import { EPostFieldType } from 'types';
 
 export type ChannelStateDocument = Document & ChannelState;
 
@@ -20,6 +22,21 @@ export class ChannelState {
 
   @Prop({ type: String, enum: Object.values(ELanguageType), required: true, default: ELanguageType.EN })
   language: ELanguageType;
+
+  // Settings
+  @Prop({ type: ChannelSettingsSchema, required: true, default: () => {
+    // Default settings
+    return {
+      notifications: {
+        fields: [ 
+          { 
+            type: EPostFieldType.DESCRIPTION 
+          } 
+        ]
+      }
+    }
+  }})
+  settings: ChannelSettings
 }
 
 export const ChannelStateSchema = SchemaFactory.createForClass(ChannelState);

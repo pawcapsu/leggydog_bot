@@ -5,6 +5,23 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
 {
   name: 'Russian',
   properties: [
+    // Notification
+    {
+      key: 'notification.title',
+      value: '*Новая картинка*\n\n',
+    },
+
+    {
+      key: 'notification.field.description',
+      value: '${ variables.description }\n',
+      acceptedVariables: [
+        {
+          name: 'description',
+          required: true
+        }
+      ]
+    },
+
     // Start Menu
     {
       key: 'start',
