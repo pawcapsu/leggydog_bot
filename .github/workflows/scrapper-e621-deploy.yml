@@ -26,10 +26,13 @@ jobs:
       run: npm run build:e621
     - name: Prepare artifact before cloud push
       run: |
-        cp $PATH_LOCAL/package.production.json $PATH_LOCAL/dist/package.json
-        cp $PATH_LOCAL/captain-definition $PATH_LOCAL/dist
+        cp $PATH_LOCAL/package.json $PATH_LOCAL/dist/package.json
+        cp -r $PATH_LOCAL/node_modules $PATH_LOCAL/dist/node_modules
+        
+        rm $PATH_LOCAL/dist/node_modules/types
+        cp -f -r types $PATH_LOCAL/dist/node_modules
 
-        npm install
+        cp $PATH_LOCAL/Dockerfile $PATH_LOCAL/dist
     - name: Install CapRover
       run: npm install -g caprover
     - name: Zip aftifact into .tar file
