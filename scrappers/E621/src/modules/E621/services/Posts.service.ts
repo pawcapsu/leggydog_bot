@@ -36,6 +36,8 @@ export class PostsService {
       }
     );
 
+    console.log(request);
+
     const posts: Array<IUnserializedPost> = request.data?.posts;
 
     return posts.map((post) => {

@@ -26,7 +26,7 @@ export class ScrapperService {
 
     // Checking if we have latest post information
     // or no
-    if (!latestPost.id) {
+    if (!latestPost?.id) {
       // Getting latest post from E621
       latestPost = await this.postsService.fetchOne([]);
       
