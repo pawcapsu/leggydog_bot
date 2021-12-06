@@ -32,14 +32,14 @@ export class ScrapperService {
       
       // Updating information about latest post in storage
       await this.storageService.updateLatestPost(latestPost);
+
+      // Waiting 5 seconds to not violate E621 request limit
+      await (new Promise((resolve) => setTimeout(() => resolve(null), 5000)));
     };
 
     // Getting new posts
     const posts = await this.postsService.fetchMany([], 10, { page: `a${latestPost.id}` });
 
-    console.log('new posts:');
-    console.log(posts.length);
-    
     if (posts.length > 0) {
       console.log("process new posts");
       // +todo
