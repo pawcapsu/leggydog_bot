@@ -22,6 +22,8 @@ export class ScrapperService {
     // Changing scrapper status
     this.working = true;
 
+    console.log('processing new posts');
+
     let latestPost: IPost = await this.storageService.getLatestPost();
 
     // Checking if we have latest post information
@@ -42,6 +44,7 @@ export class ScrapperService {
 
     if (posts.length > 0) {
       console.log("process new posts");
+      console.log(posts.length);
       // +todo
       // add new posts to storage instance      
 
