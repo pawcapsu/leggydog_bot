@@ -18,14 +18,19 @@ export class NewPostsListener {
   @EventPattern('backend::processNewPosts')
   public async processNewPosts(
     @Payload() posts: Array<IPost>
-  ) {
+  ) {    
     for (const post of posts) {
+      const sentTo: string[] = [];
+
       // Finding subscriptions with these tags
       const subscriptions = await this.subscriptionModel.find({ "details.tags": { $in: post.tags } });
 
       subscriptions.forEach((subscription) => {
-        console.log('send');
-        this.sendPostService.send(subscription, post);
+        if (!sentTo.includes(subscription.consumer.identifier)) {
+          // Sending
+          this.sendPostService.send(subscription, post);
+          sentTo.push(subscription.consumer.identifier);
+        };
       });
     };
   };
