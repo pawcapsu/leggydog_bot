@@ -28,11 +28,11 @@ export class CancelSubscriberCreationController implements OnApplicationBootstra
   public pattern = /cancelSubscriberCreation/;
 
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder();
+    const chat_id = String(ctx.update?.callback_query?.from.id);
+    const message = await this.service.messageBuilder(chat_id);
     
     // Updating channel state
     // Do we even need this anymore?
-    const chat_id = String(ctx.update?.callback_query?.from.id);
     // await this.channelService.update(String(ctx.update?.callback_query?.from.id), { action: { type: 'NONE' } });
     
     // Updating cached value

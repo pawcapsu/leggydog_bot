@@ -23,7 +23,8 @@ export class SubscribersCommandController implements OnApplicationBootstrap, IBo
   public pattern = /subscribers/;
 
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder();
+    const chat_id = ctx.update.message?.from.id;
+    const message = await this.service.messageBuilder(String(chat_id));
     ctx.reply(message.text, message.options);
   };
 };
@@ -46,7 +47,8 @@ export class SubscribersCallbackController implements OnApplicationBootstrap, IB
   public pattern = /openSubscriberMenu/;
 
   public async run(ctx: Context) {
-    const message = await this.service.messageBuilder();
+    const chat_id = ctx.update.callback_query?.from.id
+    const message = await this.service.messageBuilder(String(chat_id));
     ctx.editMessageText(message.text, message.options);
     // +todo
     // ctx.reply(message.text, message.options);

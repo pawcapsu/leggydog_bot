@@ -26,7 +26,19 @@ export class SubscriberService {
     );
   };
 
-  // public fetchOne
+  // public deleteOne
+  public async deleteOne(subscriberId: string) {
+    return await firstValueFrom(
+      this.client
+        .send('subscriber::deleteOne', { type: 'TELEGRAM', subscriberId })
+        .pipe(
+          timeout(2000),
+          catchError((error) => {
+            throw new Error(ErrorType.TIMEDOUT, `Unable to delete subscriber with id: ${ subscriberId }`);
+          })
+        )
+    )
+  };
 
   // public create
   public async create(chat_id: string, tags: string[]) {

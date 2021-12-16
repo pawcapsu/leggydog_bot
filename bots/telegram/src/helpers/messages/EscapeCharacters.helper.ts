@@ -19,7 +19,7 @@ export function _escapeCharacters(string: string) {
     ".",
     "!",
   ].forEach((symbol) => {
-    string = string.replace(new RegExp(`\\${symbol}`, "g"), `\\${symbol}`);
+    string = string?.replace(new RegExp(`\\${symbol}`, "g"), `\\${symbol}`);
   });
 
   return string;
