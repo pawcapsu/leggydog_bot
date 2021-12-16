@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ESubscriptionSourceType, Subscription, ESixSubscriptionDetails, SubscriptionDocument, Error, CreateSubscriptionInput, ErrorType } from 'src/types';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class SingleSubscriberService {
@@ -9,6 +9,14 @@ export class SingleSubscriberService {
     @InjectModel('subscription')
     private readonly subscriptionModel: Model<SubscriptionDocument>
   ) {}
+
+  // public deleteSubscriber
+  public async deleteSubscriber(subscriber: string): Promise<boolean> {
+    // Trying to delete this subscriber
+    const result = await this.subscriptionModel.deleteOne({ _id: new Types.ObjectId(subscriber) });
+    
+    return result.deletedCount == 0 ? false : true;
+  };
 
   // public createSubscriber
   public async createSubscriber(input: CreateSubscriptionInput): Promise<SubscriptionDocument | Error> {

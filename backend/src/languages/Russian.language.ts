@@ -5,6 +5,62 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
 {
   name: 'Russian',
   properties: [
+
+    // - menu
+    {
+      key: 'subscribers.button.createNew',
+      value: '➕ Создать подписку',
+    },
+
+    {
+      key: 'subscribers.menu',
+      value: '*Подписки*',
+    },
+
+    {
+      key: 'subscribers.button.list',
+      value: 'Список подписок',
+    },
+
+    // - list
+    {
+      key: 'subscribers.list.previous',
+      value: 'Предыдущая',
+    },
+
+    {
+      key: 'subscribers.list.next',
+      value: 'Следующая',
+    },
+
+    {
+      key: 'subscribers.list.information',
+      value: '*Информация о подписке №${ variables.currentSubscriber } из ${ variables.subscribersLength } подписок*\n\n*ID Подписки*: \\`${ variables.currentSubscriberId }\\`\n_Ид подписки в системе_\n\n*Теги*: \\`${ variables.tags.join(", ") }\\`\n_Теги, по которым мы ищем новые картинки_\n\n\n',
+      acceptedVariables: [
+        {
+          name: 'currentSubscriber',
+          required: true,
+        },
+        {
+          name: 'subscribersLength',
+          required: true
+        },
+        {
+          name: 'currentSubscriberId',
+          required: true,
+        },
+        {
+          name: 'tags',
+          required: true
+        }
+      ],
+    },
+
+    {
+      key: 'subscribers.list.emptySubscribers',
+      value: '*0 Подписок*\n\nДанный канал не подписан ни на один тег! Время это исправить, не думаешь?\n\nДля того, что бы подписаться на теги, нажмите на кнопку \`➕ Create new Subscriber\`, я вам там всё расскажу и объясню!',
+    },
+
     // Notification
     {
       key: 'notification.title',
@@ -106,6 +162,21 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
     {
       key: 'common.buttons.close',
       value: '❌ Закрыть',
+    },
+
+    {
+      key: 'common.buttons.delete',
+      value: '🗑️ Удалить',
+    },
+
+    {
+      key: 'common.buttons.edit',
+      value: '✏️ Редактировать',
+    },
+
+    {
+      key: 'common.buttons.back',
+      value: '🏠 Назад'
     },
 
     // Create subscriber

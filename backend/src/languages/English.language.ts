@@ -5,6 +5,63 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 {
   name: 'English',
   properties: [
+    // Subscribers
+
+    // - menu
+    {
+      key: 'subscribers.button.createNew',
+      value: '➕ Create new Subscriber',
+    },
+
+    {
+      key: 'subscribers.menu',
+      value: '*Subscribers*',
+    },
+
+    {
+      key: 'subscribers.button.list',
+      value: 'Subscriptions List',
+    },
+
+    // - list
+    {
+      key: 'subscribers.list.previous',
+      value: 'Previous',
+    },
+
+    {
+      key: 'subscribers.list.next',
+      value: 'Next',
+    },
+
+    {
+      key: 'subscribers.list.information',
+      value: '*Subscription №${ variables.currentSubscriber }/${ variables.subscribersLength }*\n\n*Subscription ID*: \\`${ variables.currentSubscriberId }\\`\n_Id of this subscription in our system_\n\n*Tags*: \\`${ variables.tags.join(", ") }\\`\n_Tags we use to search for new pictures_\n\n\n',
+      acceptedVariables: [
+        {
+          name: 'currentSubscriber',
+          required: true,
+        },
+        {
+          name: 'subscribersLength',
+          required: true
+        },
+        {
+          name: 'currentSubscriberId',
+          required: true,
+        },
+        {
+          name: 'tags',
+          required: true
+        }
+      ],
+    },
+
+    {
+      key: 'subscribers.list.emptySubscribers',
+      value: '*0 Subscriptions*\n\nThis channel is not subscribed to any tag! Time to fix it, don\'t you think?\n\nTo subscribe to the tags, click on the button \`➕ Create new Subscriber\`',
+    },
+
     // Notification
     {
       key: 'notification.title',
@@ -101,6 +158,21 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     {
       key: 'common.buttons.close',
       value: '❌ Close',
+    },
+
+    {
+      key: 'common.buttons.delete',
+      value: '🗑️ Delete',
+    },
+
+    {
+      key: 'common.buttons.edit',
+      value: '✏️ Edit',
+    },
+
+    {
+      key: 'common.buttons.back',
+      value: '🏠 Go back'
     },
 
     // Errors

@@ -9,6 +9,17 @@ export class SingleSubscriberListener {
     private readonly subscriberService: SingleSubscriberService,
   ) {}
 
+  // subscriber::deleteOne
+  @MessagePattern('subscriber::deleteOne')
+  public async deleteSubscriber(
+    @Payload() data: any
+  ): Promise<{ deleted: boolean }> {
+    const deleted = await this.subscriberService.deleteSubscriber(data.subscriberId ?? '0');
+    return {
+      deleted
+    };
+  };
+
   // subscriber::create
   @MessagePattern('subscriber::create')
   public async createSubscriber(
