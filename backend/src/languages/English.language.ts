@@ -69,6 +69,11 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     },
 
     {
+      key: 'notification.dislikePost',
+      value: "I don't like it"
+    },
+    
+    {
       key: 'notification.field.description',
       value: '${ variables.description }\n',
       acceptedVariables: [
@@ -77,6 +82,16 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
           required: true
         }
       ]
+    },
+
+    {
+      key: 'notification.field.description.empty',
+      value: 'Empty description',
+    },
+
+    {
+      key: 'notification.field.description.more',
+      value: '...'
     },
 
     // Start Menu

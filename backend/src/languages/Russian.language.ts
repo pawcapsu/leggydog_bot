@@ -68,6 +68,11 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
     },
 
     {
+      key: 'notification.dislikePost',
+      value: "Мне это не нравится"
+    },
+
+    {
       key: 'notification.field.description',
       value: '${ variables.description }\n',
       acceptedVariables: [
@@ -76,6 +81,16 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
           required: true
         }
       ]
+    },
+
+    {
+      key: 'notification.field.description.empty',
+      value: 'Пустое описание',
+    },
+
+    {
+      key: 'notification.field.description.more',
+      value: '...'
     },
 
     // Start Menu
@@ -189,7 +204,7 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
     // Created new subscriber menu
     {
       key: 'subscriber.create.subscribed',
-      value: '*Вы подписали на теги*\n\`${ variables.tags.join(", ") }\`\n\nТеперь я буду отправлять вам все самые новые картинки по этим тегам, ура-ура-ура!\n\nВ ближайшие несколько минут придёт ваша самая первая картинка, в которой будет описанно что с ней можно делать дальше.\n\nОсталось просто подождать!',
+      value: '*Вы подписали на теги*\n\\`${ variables.tags.join(", ") }\\`\n\nТеперь я буду отправлять вам все самые новые картинки по этим тегам, ура-ура-ура!\n\nВ ближайшие несколько минут придёт ваша самая первая картинка, в которой будет описанно что с ней можно делать дальше.\n\nОсталось просто подождать!',
       acceptedVariables: [
         {
           name: 'tags',
