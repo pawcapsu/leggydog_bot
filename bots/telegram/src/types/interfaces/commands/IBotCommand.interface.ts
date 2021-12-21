@@ -2,6 +2,12 @@ import { Context } from "grammy";
 
 // Exporting IBotCommand interface
 export class IBotCommand {
+  // +todo remove pattern
   public pattern: RegExp;
-  public run: (ctx: Context) => any | void;
+
+  public command?: string;
+  public display?: boolean;
+  public description?: string;
+
+  public run: (ctx: Context) => Promise<any | void>;
 };

@@ -27,7 +27,7 @@ export class ErrorHandlerService {
         options: {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard()
-            .url("Learn more", "https://services.pawcapsu.ml/leggybot")
+            .text('Delete this', 'delete-me')
         },
       };
     } else {

@@ -25,6 +25,10 @@ export class StopCommandController implements OnApplicationBootstrap, IBotComman
   // Command-related
   public pattern = /stop/;
 
+  public display = true;
+  public command = "/stop";
+  public description = "Stop bot activity";
+
   public async run(ctx: Context) {
     // Stopping this bot
     const chat_id = String(ctx.update?.message?.from?.id)

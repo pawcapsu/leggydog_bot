@@ -25,6 +25,10 @@ export class MenuCommand implements OnApplicationBootstrap, IBotCommand {
   // - pattern
   public pattern = /menu/;
 
+  public display = true;
+  public command = "/menu";
+  public description = "Open bot's main menu";
+
   // - run command
   public async run(ctx: Context) {
     const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id));

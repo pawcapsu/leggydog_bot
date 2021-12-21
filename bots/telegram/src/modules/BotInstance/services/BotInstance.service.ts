@@ -31,7 +31,7 @@ export class BotInstanceService {
   ) {
     // Creating new bot instance
     this.bot = new Bot(process.env.TELEGRAM_KEY);
-    
+
     // Adding command listener
     this.bot.on('message', async (ctx) => {
       if (ctx.update?.message?.text) {
@@ -138,6 +138,16 @@ export class BotInstanceService {
     if (type == ERegisterScriptType.COMMAND) {
       this.logger.warn(`Registered command with pattern ${instance.pattern}`);
       this.commands.push(instance);
+
+      // Updating commands list
+      this.bot.api.setMyCommands(
+        this.commands.filter((command) => command.display && command.command).map((instance) => {
+          return {
+            command: instance.command,
+            description: instance.description ?? 'No description',
+          }
+        }),
+      );
     } else if (type == ERegisterScriptType.CALLBACK) {
       this.logger.warn(`Registered callback with pattern ${instance.pattern}`);
       this.callbacks.push(instance);

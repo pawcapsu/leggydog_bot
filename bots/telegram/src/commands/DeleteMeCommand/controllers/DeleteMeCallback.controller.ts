@@ -19,7 +19,7 @@ export class DeleteMeCallback implements OnApplicationBootstrap, IBotCallback {
   // Callback-related
   public pattern = /delete-me/;
 
-  public run(ctx: Context) {
+  public async run(ctx: Context) {
     ctx.deleteMessage();
   };
 };

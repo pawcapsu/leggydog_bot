@@ -23,7 +23,12 @@ export class NewPostService {
     fields.forEach((field) => {
       // Description field
       if (field.type == EPostFieldType.DESCRIPTION) {
-        caption += language.get('notification.field.description', { description: 'Test description' });
+        let description: String = field.value == '' ? language.get('notification.field.description.empty') : (field.value) as String;
+        if (description.split('').length > 50) {
+          description = description.slice(0, 50) + `\n${ language.get('notification.field.description.more') }`
+        };
+
+        caption += language.get('notification.field.description', { description });
       };
 
       // Watchable tags field
@@ -34,8 +39,7 @@ export class NewPostService {
       caption: _escapeCharacters(caption),
       parse_mode: EParseMode.MARKDOWNV2,
       reply_markup: new InlineKeyboard()
-        .text("Like it!")
-        .text("Don't like", "delete-me")
+        .text(language.get('notification.dislikePost'), "delete-me")
     }
   };
 };

@@ -22,6 +22,10 @@ export class SubscribersCommandController implements OnApplicationBootstrap, IBo
   // Command-related
   public pattern = /subscribers/;
 
+  public display = true;
+  public command = "/subscribers";
+  public description = "Open subscribers menu";
+
   public async run(ctx: Context) {
     const chat_id = ctx.update.message?.from.id;
     const message = await this.service.messageBuilder(String(chat_id));
