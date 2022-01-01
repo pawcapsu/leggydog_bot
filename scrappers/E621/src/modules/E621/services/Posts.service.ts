@@ -47,9 +47,21 @@ export class PostsService {
   public _serialize(post: IUnserializedPost): IPost {
     return <IPost>{
       id: String(post.id),
-      file_url: post.file.url,
-      preview_url: post.preview.url,
-      sample_url: post.sample.url,
+      file_url: {
+        height: post.file.height,
+        width: post.file.width,
+        url: post.file.url,
+      },
+      preview_url: {
+        height: post.preview.height,
+        width: post.preview.width,
+        url: post.preview.url,
+      },
+      sample_url: {
+        height: post.sample.height,
+        width: post.sample.width,
+        url: post.sample.url,
+      },
       description: post.description,
       tags: [ 
         ...post.tags.general, 

@@ -17,8 +17,6 @@ export class PostsController {
   public updateLatestPost(
     @Payload() data: { id: string }
   ) {
-    console.log('update latest post')
-    console.log(data);
     this.latestPost = data;
   };
 };
