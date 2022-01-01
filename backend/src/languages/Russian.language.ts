@@ -84,6 +84,17 @@ export const RussianLanguage: { name: string, properties: LanguageProperty[] } =
     },
 
     {
+      key: 'notification.field.post_url',
+      value: '\\`Ссылка на пост:\\` [Тыкни сюда!](${ variables.post_url })\n',
+      acceptedVariables: [
+        {
+          name: 'post_url',
+          required: true,
+        },
+      ],
+    },
+
+    {
       key: 'notification.field.description.empty',
       value: 'Пустое описание',
     },

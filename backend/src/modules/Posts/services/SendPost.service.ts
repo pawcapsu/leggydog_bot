@@ -37,8 +37,23 @@ export class SendPostService {
 
       // +todo
       // Author field
-      // Rating field
+      if (field.type == EPostFieldType.AUTHOR) {
+        // fields.push({
+        //   type: field.type,
+        //   value: post.
+        // })
+      };
+      
       // Post link field
+      if (field.type == EPostFieldType.POST_LINK) {
+        fields.push({
+          type: field.type,
+          value: `https://e621.net/posts/${ post.id }`,
+        });
+      };
+
+      // Watchable tags
+      // if (field.type == )
     });
 
     // +todo
@@ -48,7 +63,8 @@ export class SendPostService {
     // consumer
     if (subscription.consumer.type == ESubscriptionConsumerType.TELEGRAM) {
       // Sending request
-      this.client.emit('telegram::sendNewPost', { identifier: subscription.consumer.identifier, image: post.file_url, fields });
+      console.log("send new post");
+      this.client.emit('telegram::sendNewPost', { identifier: subscription.consumer.identifier, post: post, fields });
     };
   };
 };

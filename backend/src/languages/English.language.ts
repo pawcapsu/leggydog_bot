@@ -85,6 +85,17 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     },
 
     {
+      key: 'notification.field.post_url',
+      value: '\\`Post link:\\` [Click here!](${ variables.post_url })\n',
+      acceptedVariables: [
+        {
+          name: 'post_url',
+          required: true,
+        },
+      ],
+    },
+
+    {
       key: 'notification.field.description.empty',
       value: 'Empty description',
     },

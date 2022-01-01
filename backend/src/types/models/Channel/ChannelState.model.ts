@@ -30,9 +30,15 @@ export class ChannelState {
       notifications: {
         fields: [ 
           { 
+            type: EPostFieldType.AUTHOR, 
+          },
+          { 
             type: EPostFieldType.DESCRIPTION 
-          } 
-        ]
+          },
+          { 
+            type: EPostFieldType.POST_LINK 
+          }
+        ],
       }
     }
   }})
