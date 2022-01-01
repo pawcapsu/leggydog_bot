@@ -49,5 +49,6 @@ export class DeleteSubscriberController implements OnApplicationBootstrap, IBotC
     // Opening SubscribersList menu
     const message = await this.service.messageBuilder(chat_id, toSubscriber);
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
   };
 };

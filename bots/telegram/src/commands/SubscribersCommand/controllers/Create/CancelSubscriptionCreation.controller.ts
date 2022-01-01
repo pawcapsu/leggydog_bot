@@ -39,6 +39,7 @@ export class CancelSubscriberCreationController implements OnApplicationBootstra
     this.cache.set(`channel-isCreatingNewSubscriber-${chat_id}`, false);
 
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
     // +todo
     // ctx.reply(message.text, message.options);
   };

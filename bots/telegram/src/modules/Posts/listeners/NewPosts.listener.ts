@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { BotInstanceService } from 'src/modules/BotInstance/services';
 import { NewPostService } from '../services';
-import { IPostField } from 'types';
+import { IPost, IPostField } from 'types';
 import { ChannelService } from 'src/modules/Channel/services';
 import * as mime from 'mime-types';
 import { ErrorHandlerService } from 'src/modules/ErrorHandler/services';
@@ -24,8 +24,8 @@ export class NewPostsListener {
   public async handleNewPost(
     @Payload() 
     data: {
-      identifier: string, 
-      image: string, 
+      identifier: string,
+      post: IPost,
       fields: Array<IPostField>, 
     },
   ) {
@@ -45,25 +45,41 @@ export class NewPostsListener {
     // Forming message and sending it to this chat
     const message = await this.service.messageBuilder(data.identifier, data.fields);
 
-    // +todo improv
-    const extension = mime.lookup(data.image);
+    // +todo
+    const extension = mime.lookup(data.post.file_url.url);
   
     // Gif
     if (['image/gif'].includes(extension)) {
-      bot.api.sendDocument(data.identifier, data.image, message)
+      bot.api.sendDocument(data.identifier, data.post.file_url.url, message)
       .catch(async () => {
         // Send error message
-        const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send gif with url ${ data.image }`));
+        const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send gif with url ${ data.post.file_url.url }`));
         bot.api.sendMessage(data.identifier, message.text, message.options);
       });
     };
 
     // Image
     if (['image/png', 'image/jpg'].includes(extension)) {
-      bot.api.sendPhoto(data.identifier, data.image, message)
+      let url;
+      
+      // Determining how we need to send this image
+      if (data.post.file_url.height >= 10000 || data.post.file_url.width >= 10000) {
+        // Sending original message
+        url = data.post.file_url.url;
+      } else {
+        // Sending sample
+        if (data.post.sample_url) {
+          url = data.post.sample_url.url;
+        } else {
+          // Oh okay
+          url = data.post.file_url.url;
+        };
+      };
+
+      bot.api.sendPhoto(data.identifier, url, message)
       .catch(async () => {
         // Send error message
-        const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send photo with url ${ data.image }`));
+        const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send photo with url ${ url }`));
         bot.api.sendMessage(data.identifier, message.text, message.options);
       });
     };

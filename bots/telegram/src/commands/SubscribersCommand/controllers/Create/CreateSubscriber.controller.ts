@@ -41,6 +41,7 @@ export class CreateSubscriberController implements OnApplicationBootstrap, IBotC
     this.cache.set(`channel-isCreatingNewSubscriber-${chat_id}`, true);
 
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
     // +todo
     // ctx.reply(message.text, message.options)
   };
@@ -71,7 +72,7 @@ export class CreateSubscriberProcessController implements OnApplicationBootstrap
     const chat_id = String(ctx.update?.message?.from.id)
     if (this.cache.get(`channel-isCreatingNewSubscriber-${chat_id}`)) {
       // +todo add more tags delimiters
-      const tags = String(ctx.update?.message?.text).split(' ');
+      const tags = String(ctx.update?.message?.text).trim().toLowerCase().split(' ');
       if (!tags) return;
 
       await this.subscriberService.create(chat_id, tags);

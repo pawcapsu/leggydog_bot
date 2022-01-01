@@ -89,5 +89,6 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
     // +todo
     // Something strange is happening here
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
   };
 };

@@ -26,6 +26,7 @@ export class CurrentSubscriberCallbackController implements OnApplicationBootstr
     const chat_id = ctx.update.callback_query?.from.id;
     const message = await this.service.messageBuilder(String(chat_id));
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
     // +todo
     // ctx.reply(message.text, message.options);
   };

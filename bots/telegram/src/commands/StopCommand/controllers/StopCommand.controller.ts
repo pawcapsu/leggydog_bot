@@ -60,5 +60,6 @@ export class StopCallbackController implements OnApplicationBootstrap, IBotCallb
     const message = await this.service.messageBuilder(String(ctx.update?.message?.from?.id));
     // +todo
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
   };
 };

@@ -19,19 +19,28 @@ export class NewPostService {
     const language = await this.languageService.getByChannel(chat_id);
     let caption = language.get('notification.title');
 
+    console.log('fields:');
+    console.log(fields);
+
     // Looping through fiels and adding messages to caption
     fields.forEach((field) => {
       // Description field
       if (field.type == EPostFieldType.DESCRIPTION) {
         let description: String = field.value == '' ? language.get('notification.field.description.empty') : (field.value) as String;
-        if (description.split('').length > 50) {
-          description = description.slice(0, 50) + `\n${ language.get('notification.field.description.more') }`
+        if (description.split('').length > 150) {
+          description = description.slice(0, 150) + `\n${ language.get('notification.field.description.more') }`
         };
 
         caption += language.get('notification.field.description', { description });
       };
 
-      // Watchable tags field
+      // +todo
+      // Author field
+
+      // Post Link field
+      if (field.type == EPostFieldType.POST_LINK) {
+        caption += language.get('notification.field.post_url', { post_url: field.value as String });
+      };
     });
 
     // Building message

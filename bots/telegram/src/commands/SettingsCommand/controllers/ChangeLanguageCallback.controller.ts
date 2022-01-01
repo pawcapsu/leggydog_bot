@@ -25,5 +25,6 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
   public async run(ctx: Context) {
     const message = await this.languageMenuService.messageBuilder(String(ctx.update?.callback_query?.from?.id), 'UserDecision', true);
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
   };
 };

@@ -50,5 +50,6 @@ export class SettingsCallbackController implements OnApplicationBootstrap, IBotC
   public async run(ctx: Context) {
     const message = await this.service.messageBuilder(String(ctx.update?.callback_query?.from.id));
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
   };
 };

@@ -26,6 +26,7 @@ export class MenuCallbackController implements OnApplicationBootstrap, IBotCallb
 
     // +todo
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
     // ctx.reply(message.text, message.options);
   };
 };

@@ -29,6 +29,7 @@ export class PagedSubscriberCallbackController implements OnApplicationBootstrap
 
     const message = await this.service.messageBuilder(chat_id, toSubscription);
     ctx.editMessageText(message.text, message.options);
+    ctx.answerCallbackQuery();
     // +todo
     // ctx.reply(message.text, message.options);
   };
