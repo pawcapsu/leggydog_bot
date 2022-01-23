@@ -10,7 +10,13 @@ export class SubscriberService {
 
   @Cron(CronExpression.EVERY_5_SECONDS)
   public async handleCron() {
-    if (!this.scrapperService.working)
-      await this.scrapperService.process();
+    if (!this.scrapperService.working) {
+      try {
+        await this.scrapperService.process();
+      } catch(error) {
+        console.log('error while scrapping:');
+        console.log(error);
+      };
+    };
   };
 };
