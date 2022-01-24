@@ -51,8 +51,6 @@ export class LanguagesConfigService {
       this.logger.warn('LanguagesFetcher error');
       return;
     };
-
-    this.logger.debug('Languages fetched and is due to be saved.');
     
     // Saving fethed languages into class's public
     // properties
