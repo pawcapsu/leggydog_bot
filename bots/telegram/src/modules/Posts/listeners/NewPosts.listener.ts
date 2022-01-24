@@ -57,6 +57,17 @@ export class NewPostsListener {
   
     console.log('extension: ', extension);
 
+    // Video (webm)
+    if (['video/webm'].includes(extension)) {
+      console.log('webm extension');
+      bot.api.sendDocument(data.identifier, data.post.file_url.url, message)
+      .catch(async () => {
+        // Send error message
+        const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send gif with url ${ data.post.file_url.url }`));
+        bot.api.sendMessage(data.identifier, message.text, message.options);
+      });
+    };
+
     // Gif
     if (['image/gif'].includes(extension)) {
       console.log('gif extension');
