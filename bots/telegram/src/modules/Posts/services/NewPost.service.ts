@@ -43,6 +43,8 @@ export class NewPostService {
       };
     });
 
+    console.log('messageBuilder caption:', caption);
+
     // Building message
     return {
       caption: _escapeCharacters(caption),
