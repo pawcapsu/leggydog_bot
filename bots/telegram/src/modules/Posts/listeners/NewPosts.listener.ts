@@ -80,7 +80,7 @@ export class NewPostsListener {
     };
 
     // Image
-    if (['image/png', 'image/jpg'].includes(extension)) {
+    if (['image/png', 'image/jpg', 'image/jpeg'].includes(extension)) {
       console.log('image');
       let url;
       
