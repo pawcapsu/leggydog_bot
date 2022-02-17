@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule } from '@nestjs/config';
+import { LogsModule } from 'src/modules/Logs/module';
 
 import * as Services from './services';
 
@@ -18,7 +19,9 @@ import * as Services from './services';
           prefix: 'broker_',
         },
       },
-    ])
+    ]),
+
+    LogsModule,
   ],
   providers: [...Object.values(Services)],
   exports: [...Object.values(Services)],

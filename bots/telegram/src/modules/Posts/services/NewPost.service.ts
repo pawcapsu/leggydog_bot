@@ -19,9 +19,6 @@ export class NewPostService {
     const language = await this.languageService.getByChannel(chat_id);
     let caption = language.get('notification.title');
 
-    console.log('fields:');
-    console.log(fields);
-
     // Looping through fiels and adding messages to caption
     fields.forEach((field) => {
       // Description field
@@ -42,8 +39,6 @@ export class NewPostService {
         caption += language.get('notification.field.post_url', { post_url: field.value as String });
       };
     });
-
-    console.log('messageBuilder caption:', caption);
 
     // Building message
     return {

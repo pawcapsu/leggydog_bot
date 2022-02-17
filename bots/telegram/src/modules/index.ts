@@ -5,3 +5,4 @@ export * from './Languages/module';
 export * from './Channel/module';
 export * from './SimpleCache/module';
 export * from './Posts/module';
+export * from './Logs/module';

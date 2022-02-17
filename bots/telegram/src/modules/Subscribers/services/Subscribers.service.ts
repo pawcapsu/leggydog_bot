@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, firstValueFrom, of, timeout } from 'rxjs';
+import { LogsService } from 'src/modules/Logs/services';
 import { Error } from 'src/types';
 import { ErrorType } from 'src/types/enums/Errors';
 
@@ -9,11 +10,15 @@ export class SubscriberService {
   constructor(
     @Inject('DATA_REQUESTS')
     private client: ClientProxy,
+  
+    private readonly logsService: LogsService,
   ) {}
 
   // public fetchMany
   // +todo
   public async fetchMany(chat_id: string | number) {
+    this.logsService.log('Fetching many subscribers!!1!');
+    
     return await firstValueFrom(
       this.client
         .send('subscribers::fetch', { type: 'TELEGRAM', identifier: String(chat_id) })
@@ -58,8 +63,6 @@ export class SubscriberService {
         tags: tags,
       }
     };
-
-    console.log(payload);
 
     // Making request
     return await firstValueFrom(

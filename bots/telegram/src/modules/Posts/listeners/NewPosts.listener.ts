@@ -31,21 +31,16 @@ export class NewPostsListener {
   ) {
     const bot = this.instance.bot;
   
-    console.log('telegram: received new post request');
-    console.log(data);
-
     // Check chat information
     try {
       await bot.api.getChat(data.identifier);
     } catch {
-      console.log('chat not found');
       return;
     };
 
     // Checking if this channel is active or no
     const isActive = await this.channelService.isActive(data.identifier);
     if (!isActive) {
-      console.log("isn't active");
       return;
     };
 
@@ -55,11 +50,8 @@ export class NewPostsListener {
     // +todo
     const extension = mime.lookup(data.post.file_url.url);
   
-    console.log('extension: ', extension);
-
     // Video (webm)
     if (['video/webm'].includes(extension)) {
-      console.log('webm extension');
       bot.api.sendDocument(data.identifier, data.post.file_url.url, message)
       .catch(async () => {
         // Send error message
@@ -70,7 +62,6 @@ export class NewPostsListener {
 
     // Gif
     if (['image/gif'].includes(extension)) {
-      console.log('gif extension');
       bot.api.sendDocument(data.identifier, data.post.file_url.url, message)
       .catch(async () => {
         // Send error message
@@ -81,7 +72,6 @@ export class NewPostsListener {
 
     // Image
     if (['image/png', 'image/jpg', 'image/jpeg'].includes(extension)) {
-      console.log('image');
       let url;
       
       // Determining how we need to send this image
@@ -98,12 +88,8 @@ export class NewPostsListener {
         };
       };
 
-      console.log('url:', url);
-
-      console.log('send');
       bot.api.sendPhoto(data.identifier, url, message)
       .catch(async () => {
-        console.log('error while sending');
         // Send error message
         const message = await this.errorService.messageBuilder(new Error(ErrorType.UNKNOWN, `Could not send photo with url ${ url }`));
         bot.api.sendMessage(data.identifier, message.text, message.options);
