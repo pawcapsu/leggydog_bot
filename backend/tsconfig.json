@@ -22,14 +22,6 @@
       "@notifier/*": [
         "src/*"
       ],
-
-      // Libraries
-      "@app/services": [
-        "libs/services/src"
-      ],
-      "@app/services/*": [
-        "libs/services/src/*"
-      ]
     }
   }
 }

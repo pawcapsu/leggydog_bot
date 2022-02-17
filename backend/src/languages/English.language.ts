@@ -86,7 +86,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 
     {
       key: 'notification.field.post_url',
-      value: '\\`Post link:\\` [Click here!](${ variables.post_url })\n',
+      value: '*Post link:* [Click here!](${ variables.post_url })\n',
       acceptedVariables: [
         {
           name: 'post_url',
@@ -115,7 +115,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Settings menu
     {
       key: 'settings',
-      value: '*Settings*\n\nMenu with settings that can help you customize this bot for all your needs! There will be a lot of cool and interesting settings to be added in the future, so stay tuned!'
+      value: '*Settings*\n\nMenu with settings that can help you customize this bot for all your needs! There will be a lot of cool and interesting settings to be added in the future, so stay tuned!\n\n*Summary:*\n\n*🇺🇸 Language* - settings of the preferred bot language;\n*🥀 Message look* - settings of how notifications about new posts look;'
     },
 
     // - buttons
@@ -127,7 +127,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 
     {
       key: 'settings.buttons.language',
-      value: 'Change language',
+      value: '🇺🇸 Language',
     },
 
     // 
@@ -139,10 +139,14 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 
     {
       key: 'dashboard',
-      value: '*Dashboard*\n\nGood day, man! I hope you have something cool in mind for today :>\n\n*Number of subscriptions:* ${ variables.subscribers.length }\n_Subscription stores the tags by which we look for new pictures for you._',
+      value: '*Dashboard*\n\n${ variables.quote }\n\n*Number of subscriptions:* ${ variables.subscribers.length }\n_Subscription stores the tags by which we look for new pictures for you._',
       acceptedVariables: [
         {
           name: 'subscribers',
+          required: true
+        },
+        {
+          name: 'quote',
           required: true
         }
       ]
@@ -204,7 +208,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Errors
     {
       key: 'error.botIsDeactivated',
-      value: `*Bot isn't activated*\n\nYou shouldn't even be here! You may have turned the bot off, and now you want to continue using it?\n\nOkay, just type \`/star\` command to activate this bot!`
+      value: `*Bot isn't activated*\n\nYou shouldn't even be here! You may have turned the bot off, and now you want to continue using it?\n\nOkay, just type \`/start\` command to activate this bot!`
     },
     
     // Create subscriber
@@ -241,7 +245,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Languages Menu
     {
       key: 'languages',
-      value: 'Please, choose your language.\n\nYeah Yeah'
+      value: '*Languages*\n\nIn this menu you can select one of the few languages that are supported by this bot.\n\nNot the most important, but very nice, functionality.'
     },
 
     {
@@ -252,6 +256,12 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     {
       key: 'languages.english',
       value: 'English',
+    },
+
+    // - main menu quotes
+    {
+      key: 'dashboard.quote.1',
+      value: "It's a pretty good morning... or afternoon... Come on, just add the most kinkiest tag into your Subscriptions list!",
     }
   ]
 };
