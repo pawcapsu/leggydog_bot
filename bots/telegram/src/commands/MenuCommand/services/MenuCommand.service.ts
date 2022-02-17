@@ -35,7 +35,7 @@ export class MenuCommandService {
       }
     } else {
       const quotesLength = 1;
-      for (let i = 0; i < quotesLength; i++) {
+      for (let i = 0; i <= quotesLength; i++) {
         quotes.push(language.get(`dashboard.quote.${i}`));
       }
     };
