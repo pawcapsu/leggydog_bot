@@ -108,7 +108,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Start Menu
     {
       key: 'start',
-      value: '*Leggydog Bot*\n\n*Please, choose your prefered language.*',
+      value: '*Welcome!*\n\nBefore you start using this bot, please select your preferred language.\n\n_It can be changed later, if necessary_',
     },
 
     // 
@@ -262,6 +262,11 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     {
       key: 'dashboard.quote.1',
       value: "It's a pretty good morning... or afternoon... Come on, just add the most kinkiest tag into your Subscriptions list!",
+    },
+
+    {
+      key: 'bot.deactivated',
+      value: `*Leggydog*\n\nSo that's it, huh? All this time together and you're just like this...\n\nBut seriously, okay. It's your decision. I'll stop sending you your dirty pictures if that's what you want. \n\n<3 I love you`
     }
   ]
 };
