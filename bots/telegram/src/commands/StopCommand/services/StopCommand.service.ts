@@ -11,10 +11,10 @@ export class StopCommandService {
 
   // public messageBuilder
   public async messageBuilder(chat_id: string) {
-    const language = this.languagesService.getByChannel(chat_id);
+    const language = await this.languagesService.getByChannel(chat_id);
 
     return {
-      text: _escapeCharacters('hello there'),
+      text: _escapeCharacters(language.get('bot.deactivated')),
       options: {
         parse_mode: EParseMode.MARKDOWNV2
       }

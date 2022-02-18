@@ -23,7 +23,7 @@ export class ErrorHandlerService {
     // Building error message
     if (error?.type != ErrorType.DEACTIVATED) {  
       return {
-        text: _escapeCharacters(`*Ошибка*\n\nПроизошла ошибка во время выполнения этой команды. Просим вас либо попробывать ещё раз либо написать в чат <ТУТ ЧАТ>.\n\nСообщение об ошибке:\n\n\`Type:\` ErrorType.${error.type}\n\n\`Message:\` ${error.message ?? '<not provided>'}`),
+        text: _escapeCharacters(`*Error*\n\nError occured while trying to do something. Could you please report it here: @leggydog_logs?.\n\n*Error information:*\n\n\`Type:\` ErrorType.${error.type}\n\n\`Message:\` ${error.message ?? '<not provided>'}`),
         options: {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard()
