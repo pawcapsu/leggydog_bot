@@ -75,7 +75,7 @@ export class NewPostsListener {
       let url;
       
       // Determining how we need to send this image
-      if (data.post.file_url.height >= 10000 || data.post.file_url.width >= 10000) {
+      if (data.post.file_url.height < 10000 && data.post.file_url.width < 10000) {
         // Sending original message
         url = data.post.file_url.url;
       } else {
