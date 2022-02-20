@@ -41,7 +41,7 @@ export class MenuCommandService {
     };
     
     return {
-      text: _escapeCharacters(subscribers.length > 0 ? language.get('dashboard', { subscribers, quote: quotes[Math.floor(Math.random() * quotes.length)] }) : language.get('dashboard.introduction')),
+      text: _escapeCharacters(subscribers.length > 0 ? language.get('dashboard', { subscribers, quote: quotes[0] ?? '<3' }) : language.get('dashboard.introduction')),
       options: {
         parse_mode: EParseMode.MARKDOWNV2,
         reply_markup: new InlineKeyboard()
