@@ -69,13 +69,9 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
 
     // Checking if this channel is activated
     const isActive = await this.channelService.isActive(chat_id);
-    if (!isActive) {
-      // Activating channel
-      await this.channelService.activate(chat_id);
-    };
-
     const channel = await this.channelService.fetchOne(chat_id);
-    if (channel.language == language) return;
+    
+    if (isActive && channel.language == language) return;
 
     await this.channelService.update(chat_id, { language });
 
@@ -84,6 +80,9 @@ export class ChangeLanguageCallback implements OnApplicationBootstrap, IBotCallb
       message = await this.service.messageBuilder(chat_id, 'UserDecision', options.fromSettings);
     } else {
       message = await this.menuService.messageBuilder(String(ctx.update?.callback_query?.from.id));
+      
+      // Activiting channel
+      await this.channelService.activate(chat_id);
     };
 
     // +todo
