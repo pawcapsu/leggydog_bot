@@ -15,7 +15,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 
     {
       key: 'subscribers.menu',
-      value: '*Subscribers*',
+      value: "*Subscriptions*\n\nA subscription stores information about the image tags you want to see in your 'feed'. Also, in the future, subscriptions will be customizable, but that's another story.\n\nHere you can either view a _list of your subscriptions_ or _create a new one_.",
     },
 
     {
@@ -59,7 +59,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
 
     {
       key: 'subscribers.list.emptySubscribers',
-      value: '*0 Subscriptions*\n\nThis channel is not subscribed to any tag! Time to fix it, don\'t you think?\n\nTo subscribe to the tags, click on the button \`➕ Create new Subscriber\`',
+      value: '*0 Subscriptions*\n\nThis channel is not subscribed to any tag! Time to fix it, don\'t you think?\n\nTo subscribe to the tags, click on the button \\`➕ Create new Subscriber\\`',
     },
 
     // Notification
@@ -208,7 +208,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Errors
     {
       key: 'error.botIsDeactivated',
-      value: `*Bot isn't activated*\n\nYou shouldn't even be here! You may have turned the bot off, and now you want to continue using it?\n\nOkay, just type \`/start\` command to activate this bot!`
+      value: "*Bot isn't activated*\n\nYou shouldn't even be here! You may have turned the bot off, and now you want to continue using it?\n\nOkay, just type \\`/start\\` command to activate this bot!"
     },
     
     // Create subscriber
@@ -221,7 +221,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Created new subscriber notification
     {
       key: 'subscriber.create.subscribed',
-      value: '*You subscribed to tags*\n\\\`${ variables.tags }\\\`\n\nNow I will send you all the newest pictures by these tags, hooray-hooray-hooray!\n\nIn the next few minutes your very first picture will come, which will describe what you can do with it next.\n\nNow we just have to wait!',
+      value: '*You subscribed to tags*\n\\`${ variables.tags }\\`\n\nNow I will send you all the newest pictures by these tags, hooray-hooray-hooray!\n\nIn the next few minutes your very first picture will come, which will describe what you can do with it next.\n\nNow we just have to wait!',
       acceptedVariables: [
         {
           name: 'tags',
@@ -233,7 +233,7 @@ export const EnglishLanguage: { name: string, properties: LanguageProperty[] } =
     // Tags error while creating subscriber
     {
       key: 'subscriber.create.tagsError',
-      value: 'Error!\n\n*These tags:* \n\n\\\`${ variables.tags }\\\` \n\n*does not exist.*\n\nPlease try again. Here, by the way, is the entire list of available tags: [Link](https://e621.net/tags)',
+      value: 'Error!\n\n*These tags:* \n\n\\`${ variables.tags }\\` \n\n*does not exist.*\n\nPlease try again. Here, by the way, is the entire list of available tags: [Link](https://e621.net/tags)',
       acceptedVariables: [
         {
           name: 'tags',
